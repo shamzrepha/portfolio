@@ -69,11 +69,31 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--glass);backd
 .navstatus{font-family:var(--mono);font-size:11px;color:var(--cyan);display:flex;align-items:center;gap:8px;white-space:nowrap;}
 .led{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 var(--green);animation:pulse 2.2s infinite;}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,255,179,.5);}70%{box-shadow:0 0 0 9px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+nav.scrolled{background:rgba(5,8,16,.72);box-shadow:0 8px 30px -12px #000,0 0 0 1px rgba(0,200,255,.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);}
+/* hamburger */
+.navtoggle{display:none;width:42px;height:38px;flex:none;border:1px solid var(--glass-line);background:rgba(5,8,16,.4);border-radius:9px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:4px;transition:.2s;}
+.navtoggle:hover{border-color:var(--cyan);box-shadow:0 0 16px -4px var(--cyan-glow);}
+.navtoggle span{display:block;width:18px;height:2px;background:var(--cyan);border-radius:2px;box-shadow:0 0 6px var(--cyan-glow);transition:.25s;}
+.navtoggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+.navtoggle.open span:nth-child(2){opacity:0;}
+.navtoggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+.mobnav{display:none;position:fixed;top:0;left:0;right:0;z-index:59;padding:70px 22px 22px;background:rgba(5,8,16,.92);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom:1px solid var(--cyan);box-shadow:0 20px 50px -20px #000;transform:translateY(-12px);opacity:0;transition:.28s cubic-bezier(.2,.8,.2,1);pointer-events:none;}
+.mobnav.open{display:block;transform:none;opacity:1;pointer-events:auto;}
+.mobnav a{display:block;font-family:var(--mono);font-size:14px;letter-spacing:.06em;color:var(--ink-dim);padding:13px 6px;border-bottom:1px solid var(--glass-line);transition:.2s;}
+.mobnav a:hover{color:var(--cyan);padding-left:12px;}
+.mobnav .navstatus{display:flex;margin-top:16px;font-size:12px;}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:120px 0 80px;}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
 .eyebrow .bar{width:46px;height:1.5px;background:var(--cyan);box-shadow:0 0 10px var(--cyan-glow);}
+.heroprofile{display:flex;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap;}
+.heroprofile .hp-av{width:54px;height:54px;border-radius:50%;flex:none;overflow:hidden;border:2px solid var(--cyan);box-shadow:0 0 24px -4px var(--cyan-glow),inset 0 0 0 3px #050810;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--cyan),var(--purple));}
+.heroprofile .hp-av img{width:100%;height:100%;object-fit:cover;}
+.heroprofile .hp-av .ini{font-family:var(--disp);font-weight:700;font-size:20px;color:#050810;}
+.heroprofile .hp-name{font-family:var(--disp);font-weight:600;font-size:16px;letter-spacing:-.01em;}
+.heroprofile .hp-title{font-family:var(--mono);font-size:11px;color:var(--cyan);margin-top:2px;}
+.heroprofile .hp-st{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;color:var(--green);border:1px solid var(--glass-line);border-radius:20px;padding:4px 11px;}
 .hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(46px,8.8vw,116px);line-height:.9;letter-spacing:-.024em;}
 .hero h1 .w{display:inline-block;}
 .hero .sub{font-family:var(--mono);font-size:clamp(13px,1.7vw,16px);color:var(--ink-dim);margin-top:26px;}
@@ -381,13 +401,32 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
 .rv.in{opacity:1;transform:none;}
 
 @media(max-width:880px){
-  .navlinks,.navstatus{display:none;}
+  nav .navlinks,nav>.navin>.navstatus{display:none;}
+  .navtoggle{display:flex;}
   .pgrid{grid-template-columns:1fr;}
   .caps .capgrid{grid-template-columns:1fr;}
+  .leadgrid{grid-template-columns:1fr;}
+  .honors{grid-template-columns:1fr;}
   .statsin{grid-template-columns:repeat(2,1fr);}
   .stat:nth-child(3){border-left:none;}
   section.block{padding:74px 0;}
   .glow-cursor{display:none!important;}
+  .profcard{padding:24px;gap:22px;}
+}
+@media(max-width:480px){
+  .wrap{padding:0 18px;}
+  .navin{padding:12px 18px;}
+  .statsin{padding:0 18px;}
+  .stat{padding:22px 14px;}
+  .stat .n{font-size:32px;}
+  .hero{padding:104px 0 60px;}
+  .heromedal{display:none;}
+  .profcard{flex-direction:column;align-items:flex-start;}
+  .profcard .pm{min-width:0;width:100%;}
+  .mbody{padding:24px 20px 28px;}
+  .mhero{height:200px;}
+  .adash{padding:22px 16px 70px;}
+  .cgrid .cc{width:100%;justify-content:center;}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;scroll-behavior:auto;}
@@ -416,13 +455,19 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
       <a href="#builds">BUILDS</a><a href="#blog">BLOG</a><a href="#honors">HONORS</a><a href="#lead">LEAD</a><a href="#stack">STACK</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
     </div>
     <div class="navstatus"><span class="led"></span>OPEN TO INTERNSHIPS</div>
+    <button class="navtoggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="mobnav" id="mobnav">
+  <a href="#builds">BUILDS</a><a href="#blog">BLOG</a><a href="#honors">HONORS</a><a href="#lead">LEAD</a><a href="#stack">STACK</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
+  <div class="navstatus"><span class="led"></span>OPEN TO INTERNSHIPS</div>
+</div>
 
 <main>
   <!-- HERO -->
   <header class="hero">
     <div class="wrap">
+      <div class="heroprofile" id="heroProfile"></div>
       <div class="eyebrow"><span class="bar"></span>EMBEDDED · HARDWARE · ROBOTICS · PROBLEM SOLVING</div>
       <h1 class="assemble" id="heroH1"><span class="w">I</span> <span class="w">think,</span> <span class="w">build,</span><br><span class="w">and</span> <span class="w neon">solve.</span></h1>
       <div class="sub">> Shamaryah Udeakpu <span class="c">|</span> Engineer · Thinker · Builder</div>
@@ -585,8 +630,14 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
         > status: <span class="ok">LOCKED</span>
       </div>
       <h2>Admin Access</h2>
-      <p>Enter your passcode to manage projects, blog, awards, achievements and profile.</p>
-      <div class="afield"><label>Passcode</label><input type="password" id="apass" placeholder="••••••••" autocomplete="off"></div>
+      <p>Sign in to manage projects, blog, awards, achievements and profile.</p>
+      <div id="passLogin">
+        <div class="afield"><label>Passcode</label><input type="password" id="apass" placeholder="••••••••" autocomplete="off"></div>
+      </div>
+      <div id="fbLogin" style="display:none;">
+        <div class="afield"><label>Email</label><input type="email" id="aemail" placeholder="you@email.com" autocomplete="username"></div>
+        <div class="afield"><label>Password</label><input type="password" id="apw" placeholder="••••••••" autocomplete="current-password"></div>
+      </div>
       <button class="abtn solid" style="width:100%;justify-content:center;" id="aloginbtn">UNLOCK →</button>
       <p style="margin-top:18px;font-size:11px;"><a href="#" style="color:var(--cyan);">← back to site</a></p>
     </div>
@@ -608,6 +659,7 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
       <button class="abtn subtle" id="btnReset">↺ Reset to default</button>
       <input type="file" id="importFile" accept="application/json" style="display:none;">
     </div>
+    <div id="fbNote" style="display:none;font-family:var(--mono);font-size:11px;color:var(--green);margin:-12px 0 20px;">● Firebase live — every save publishes instantly to all visitors. Export is just a backup.</div>
 
     <div class="adlayout">
       <div class="aside">
@@ -706,6 +758,49 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
 </div>
 
 <div class="toast" id="toast"></div>
+
+<script type="module">
+// ====================== FIREBASE CONFIG ======================
+// PASTE your Firebase project's config object below (Project Settings → your web app).
+// These values are safe to expose in client code.
+const firebaseConfig = {
+  apiKey: "PASTE_API_KEY",
+  authDomain: "PASTE.firebaseapp.com",
+  projectId: "PASTE_PROJECT_ID",
+  storageBucket: "PASTE.appspot.com",
+  messagingSenderId: "PASTE_SENDER_ID",
+  appId: "PASTE_APP_ID"
+};
+// =============================================================
+const FIREBASE_ENABLED = !!firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith('PASTE');
+
+const FB = { enabled: FIREBASE_ENABLED };
+window.FB = FB;
+
+if (FIREBASE_ENABLED) {
+  try {
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js");
+    const { getFirestore, doc, getDoc, setDoc, onSnapshot } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js");
+    const { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js");
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const ref = doc(db, 'site', 'data');
+
+    FB.getData = async () => { const s = await getDoc(ref); return s.exists() ? s.data() : null; };
+    FB.seed = async (data) => { await setDoc(ref, data); };
+    FB.save = async (data) => { await setDoc(ref, data); };
+    FB.subscribe = (cb) => onSnapshot(ref, (s) => { if (s.exists()) cb(s.data()); });
+    FB.signIn = (email, pw) => signInWithEmailAndPassword(auth, email, pw);
+    FB.signOut = () => signOut(auth);
+    FB.onAuth = (cb) => onAuthStateChanged(auth, cb);
+  } catch (e) {
+    console.error('Firebase init failed, falling back to local mode', e);
+    FB.enabled = false;
+  }
+}
+window.dispatchEvent(new Event('fb-ready'));
+</script>
 
 <script>
 /* ============================== ICON LIBRARY ============================== */
@@ -809,12 +904,33 @@ function migrate(d){
   if(!Array.isArray(d.achievements))d.achievements=[];
   return d;
 }
+function fbReady(){ return new Promise(res=>{ if(window.FB) return res(); window.addEventListener('fb-ready',()=>res(),{once:true}); }); }
+function fbOn(){ return !!(window.FB&&window.FB.enabled); }
 async function loadData(){
+  await fbReady();
+  if(fbOn()){
+    try{
+      const remote=await window.FB.getData();
+      if(remote){ DATA=migrate(remote); return; }
+      // no doc yet — bootstrap from data.json / SEED and seed Firestore
+      try{const r=await fetch('./data.json',{cache:'no-store'}); if(r.ok){DATA=migrate(await r.json());}else DATA=migrate(deepClone(SEED));}catch(e){DATA=migrate(deepClone(SEED));}
+      try{ await window.FB.seed(DATA); }catch(e){}
+      return;
+    }catch(e){ /* fall through to local */ }
+  }
   try{const raw=localStorage.getItem(LS_KEY); if(raw){DATA=migrate(JSON.parse(raw)); return;}}catch(e){}
   try{const r=await fetch('./data.json',{cache:'no-store'}); if(r.ok){DATA=migrate(await r.json()); return;}}catch(e){}
   DATA=migrate(deepClone(SEED));
 }
 function saveLocal(){ try{localStorage.setItem(LS_KEY,JSON.stringify(DATA));}catch(e){toast('Storage full — use image URLs, not uploads');} }
+async function persist(localMsg){
+  if(fbOn()){
+    try{ await window.FB.save(DATA); toast('Saved & live ✓'); return; }
+    catch(e){ console.error(e); toast('Save failed — check connection'); return; }
+  }
+  saveLocal();
+  if(localMsg)toast(localMsg);
+}
 
 /* ============================== UTIL ============================== */
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -917,6 +1033,14 @@ function renderProfile(){
   const pf=DATA.profile;
   document.getElementById('profCard').innerHTML=profileCardHTML(pf);
 }
+function renderHeroProfile(){
+  const pf=DATA.profile;const el=document.getElementById('heroProfile');if(!el)return;
+  const av=pf.photo?`<img src="${esc(pf.photo)}" alt="${esc(pf.name)}" onerror="this.parentNode.innerHTML='<span class=\\'ini\\'>'+'${esc(initials(pf.name))}'+'</span>'">`:`<span class="ini">${esc(initials(pf.name))}</span>`;
+  el.innerHTML=`
+    <div class="hp-av">${av}</div>
+    <div><div class="hp-name">${esc(pf.name||'')}</div><div class="hp-title">${esc(pf.title||'')}</div></div>
+    ${pf.status?`<span class="hp-st"><span class="led"></span>${esc(pf.status)}</span>`:''}`;
+}
 function renderContact(){
   const pf=DATA.profile;const g=document.getElementById('contactGrid');
   let h='';
@@ -926,7 +1050,7 @@ function renderContact(){
   if(pf.location)h+=`<span class="cc"><span class="k">LOC</span> ${esc(pf.location)}</span>`;
   g.innerHTML=h;
 }
-function renderAll(){renderFilters();renderProjects();renderBlog();renderHonors();renderProfile();renderContact();}
+function renderAll(){renderFilters();renderProjects();renderBlog();renderHonors();renderProfile();renderHeroProfile();renderContact();}
 
 /* ============================== MODAL ============================== */
 function openProject(id){
@@ -967,10 +1091,11 @@ document.getElementById('lightbox').onclick=closeLightbox;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('lightbox').classList.contains('open'))closeLightbox();else closeModal();}});
 
 /* ============================== ROUTER / ADMIN ============================== */
+let FB_AUTHED=false;
 function route(){
   const isAdmin=location.hash==='#admin';
   document.body.classList.toggle('admin-mode',isAdmin);
-  if(isAdmin){ closeModal(); document.body.style.overflow=''; const authed=sessionStorage.getItem('sham_admin')==='1'; showAdmin(authed); }
+  if(isAdmin){ closeModal(); document.body.style.overflow=''; const authed=fbOn()?FB_AUTHED:(sessionStorage.getItem('sham_admin')==='1'); showAdmin(authed); }
 }
 window.addEventListener('hashchange',route);
 function showAdmin(authed){
@@ -978,13 +1103,36 @@ function showAdmin(authed){
   document.getElementById('adash').style.display=authed?'block':'none';
   if(authed)renderAdmin();
 }
-document.getElementById('aloginbtn').onclick=()=>{
+/* adapt login UI + auth listener once Firebase is ready */
+fbReady().then(()=>{
+  const on=fbOn();
+  document.getElementById('passLogin').style.display=on?'none':'block';
+  document.getElementById('fbLogin').style.display=on?'block':'none';
+  document.getElementById('fbNote').style.display=on?'block':'none';
+  if(on){
+    window.FB.onAuth(user=>{ FB_AUTHED=!!user; if(location.hash==='#admin')showAdmin(FB_AUTHED); });
+    // realtime public updates
+    window.FB.subscribe(remote=>{ if(!remote)return; DATA=migrate(remote); renderAll(); /* don't clobber admin forms mid-edit — only public views re-render live */ });
+  }
+});
+document.getElementById('aloginbtn').onclick=async()=>{
+  if(fbOn()){
+    const email=document.getElementById('aemail').value.trim(),pw=document.getElementById('apw').value;
+    if(!email||!pw){toast('Enter email & password');return;}
+    try{ await window.FB.signIn(email,pw); toast('Welcome back, Shamaryah'); }
+    catch(e){ toast('Login failed — check credentials'); }
+    return;
+  }
   const v=document.getElementById('apass').value;
   if(v===ADMIN_PASS){sessionStorage.setItem('sham_admin','1');showAdmin(true);toast('Welcome back, Shamaryah');}
   else toast('Incorrect passcode');
 };
-document.getElementById('apass').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('aloginbtn').click();});
-document.getElementById('alogout').onclick=()=>{sessionStorage.removeItem('sham_admin');location.hash='';showAdmin(false);};
+['apass','apw'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('aloginbtn').click();});});
+document.getElementById('alogout').onclick=async()=>{
+  if(fbOn()){ try{await window.FB.signOut();}catch(e){} FB_AUTHED=false; }
+  else sessionStorage.removeItem('sham_admin');
+  location.hash='';showAdmin(false);
+};
 document.getElementById('viewSite').onclick=(e)=>{e.preventDefault();location.hash='';};
 
 /* sidebar nav */
@@ -1045,7 +1193,7 @@ function saveProject(){
     image:p_image.value.trim(),images:collectGallery(),date:p_date.value.trim(),featured:document.getElementById('p_featured').checked,links:[]};
   const i=DATA.projects.findIndex(x=>x.id===obj.id);
   if(i>=0){obj.icon=DATA.projects[i].icon;obj.award=DATA.projects[i].award;DATA.projects[i]=obj;}else DATA.projects.unshift(obj);
-  saveLocal();renderAdmin();renderAll();clearProject();toast('Project saved ✓');
+  persist('Project saved ✓');renderAdmin();renderAll();clearProject();
 }
 
 /* ---- blog form ---- */
@@ -1055,7 +1203,7 @@ function savePost(){const t=b_title.value.trim();if(!t){toast('Title required');
   const obj={id:b_id.value||uid(),title:t,body:b_body.value,date:b_date.value.trim()||todayStr(),published:document.getElementById('b_published').checked};
   if(!DATA.posts)DATA.posts=[];
   const i=DATA.posts.findIndex(x=>x.id===obj.id);if(i>=0)DATA.posts[i]=obj;else DATA.posts.unshift(obj);
-  saveLocal();renderAdmin();renderBlog();clearPost();toast('Post saved ✓');}
+  persist('Post saved ✓');renderAdmin();renderBlog();clearPost();}
 
 /* ---- award form ---- */
 function clearAward(){a_id.value='';a_title.value='';a_place.value='';a_event.value='';a_desc.value='';a_date.value='';document.getElementById('a_gold').checked=true;}
@@ -1063,7 +1211,7 @@ window.editAward=function(id){const a=DATA.awards.find(x=>x.id===id);if(!a)retur
 function saveAward(){const t=a_title.value.trim();if(!t){toast('Title required');return;}
   const obj={id:a_id.value||uid(),title:t,place:a_place.value.trim(),event:a_event.value.trim(),desc:a_desc.value.trim(),date:a_date.value.trim(),gold:document.getElementById('a_gold').checked};
   const i=DATA.awards.findIndex(x=>x.id===obj.id);if(i>=0)DATA.awards[i]=obj;else DATA.awards.unshift(obj);
-  saveLocal();renderAdmin();renderHonors();clearAward();toast('Award saved ✓');}
+  persist('Award saved ✓');renderAdmin();renderHonors();clearAward();}
 
 /* ---- achievement form ---- */
 function clearAch(){c_id.value='';c_title.value='';c_org.value='';c_desc.value='';c_date.value='';}
@@ -1071,7 +1219,7 @@ window.editAch=function(id){const a=DATA.achievements.find(x=>x.id===id);if(!a)r
 function saveAch(){const t=c_title.value.trim();if(!t){toast('Title required');return;}
   const obj={id:c_id.value||uid(),title:t,org:c_org.value.trim(),desc:c_desc.value.trim(),date:c_date.value.trim()};
   const i=DATA.achievements.findIndex(x=>x.id===obj.id);if(i>=0)DATA.achievements[i]=obj;else DATA.achievements.unshift(obj);
-  saveLocal();renderAdmin();renderHonors();clearAch();toast('Achievement saved ✓');}
+  persist('Achievement saved ✓');renderAdmin();renderHonors();clearAch();}
 
 /* ---- profile form ---- */
 function profPicPreview(){const pv=document.getElementById('pr_photo_prev');const v=document.getElementById('pr_photo').value.trim();if(v){pv.innerHTML=`<img src="${esc(v)}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.innerHTML='<span class=ini>${esc(initials(document.getElementById('pr_name').value))}</span>'">`;}else{pv.innerHTML=`<span class="ini">${esc(initials(document.getElementById('pr_name').value))}</span>`;}}
@@ -1080,10 +1228,10 @@ document.getElementById('pr_photo').oninput=profPicPreview;
 document.getElementById('pr_name').oninput=profPicPreview;
 document.getElementById('saveProfile').onclick=()=>{
   DATA.profile={photo:pr_photo.value.trim(),name:pr_name.value.trim(),title:pr_title.value.trim(),bio:pr_bio.value.trim(),location:pr_location.value.trim(),email:pr_email.value.trim(),phone:pr_phone.value.trim(),linkedin:pr_linkedin.value.trim(),status:pr_status.value.trim()};
-  saveLocal();renderProfile();renderContact();renderProfileForm();toast('Profile saved ✓');
+  persist('Profile saved ✓');renderHeroProfile();renderProfile();renderContact();renderProfileForm();
 };
 
-window.delItem=function(coll,id){if(!confirm('Delete this item?'))return;DATA[coll]=DATA[coll].filter(x=>x.id!==id);saveLocal();renderAdmin();renderAll();toast('Deleted');};
+window.delItem=function(coll,id){if(!confirm('Delete this item?'))return;DATA[coll]=DATA[coll].filter(x=>x.id!==id);persist('Deleted');renderAdmin();renderAll();};
 
 document.querySelectorAll('[data-save]').forEach(b=>b.onclick=()=>{const k=b.dataset.save;if(k==='projects')saveProject();if(k==='blog')savePost();if(k==='awards')saveAward();if(k==='achievements')saveAch();});
 document.querySelectorAll('[data-clear]').forEach(b=>b.onclick=()=>{const k=b.dataset.clear;if(k==='projects')clearProject();if(k==='blog')clearPost();if(k==='awards')clearAward();if(k==='achievements')clearAch();});
@@ -1095,13 +1243,23 @@ document.getElementById('btnPublish').onclick=()=>{
   toast('data.json downloaded — commit it to your repo to go live');
 };
 document.getElementById('btnImport').onclick=()=>document.getElementById('importFile').click();
-document.getElementById('importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{DATA=migrate(JSON.parse(r.result));saveLocal();renderAdmin();renderAll();toast('Imported ✓');}catch(err){toast('Invalid JSON file');}};r.readAsText(f);};
-document.getElementById('btnPull').onclick=async()=>{try{const r=await fetch('./data.json',{cache:'no-store'});if(!r.ok)throw 0;DATA=migrate(await r.json());saveLocal();renderAdmin();renderAll();toast('Loaded published data.json');}catch(e){toast('No published data.json found');}};
-document.getElementById('btnReset').onclick=()=>{if(!confirm('Reset to the original default content? Your local changes will be lost.'))return;DATA=migrate(deepClone(SEED));saveLocal();renderAdmin();renderAll();toast('Reset to default');};
+document.getElementById('importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{DATA=migrate(JSON.parse(r.result));persist('Imported ✓');renderAdmin();renderAll();}catch(err){toast('Invalid JSON file');}};r.readAsText(f);};
+document.getElementById('btnPull').onclick=async()=>{try{const r=await fetch('./data.json',{cache:'no-store'});if(!r.ok)throw 0;DATA=migrate(await r.json());persist('Loaded published data.json');renderAdmin();renderAll();}catch(e){toast('No published data.json found');}};
+document.getElementById('btnReset').onclick=()=>{if(!confirm('Reset to the original default content? Your local changes will be lost.'))return;DATA=migrate(deepClone(SEED));persist('Reset to default');renderAdmin();renderAll();};
 
 /* ============================== INTERACTIONS ============================== */
 const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 const isMobile=()=>innerWidth<=880;
+
+/* mobile nav + scrolled nav */
+(function(){
+  const tg=document.getElementById('navToggle'),mn=document.getElementById('mobnav'),nv=document.querySelector('nav');
+  function setOpen(o){tg.classList.toggle('open',o);mn.classList.toggle('open',o);tg.setAttribute('aria-expanded',o?'true':'false');}
+  if(tg)tg.onclick=()=>setOpen(!mn.classList.contains('open'));
+  if(mn)mn.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(false)));
+  function onScroll(){if(nv)nv.classList.toggle('scrolled',window.scrollY>20);}
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
 
 /* cursor glow — snaps directly, no lerp */
 if(!reduce&&!isMobile()){const glow=document.getElementById('glow');
