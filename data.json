@@ -1,0 +1,214 @@
+{
+  "projects": [
+    {
+      "id": "pet",
+      "title": "PET Filament Recycling Machine",
+      "category": "Sustainability",
+      "icon": "pet",
+      "featured": true,
+      "date": "2026",
+      "award": "CODET 2026 — 1st & 3rd Place",
+      "tagline": "Turning plastic waste into 3D-printer filament — the award-winning CODET build.",
+      "description": "A machine that recycles PET plastic waste (like used bottles) into usable 3D-printer filament. Built and presented at the CODET Engineering Competition (Council of Deans of Engineering & Technology), South-East zone, where it helped secure 1st and 3rd place overall and a place at the national finals in Abuja. It tackles plastic pollution while producing a low-cost material for makers and engineers.",
+      "highlights": [
+        "Led the team that presented the machine at the CODET South-East competition",
+        "Took 1st & 3rd place overall and qualified for the national finals in Abuja",
+        "Converts waste PET into 3D-printing filament — sustainability meets engineering"
+      ],
+      "tech": [
+        "Mechanical Design",
+        "Extrusion",
+        "Thermal Control",
+        "Sustainability"
+      ],
+      "links": []
+    },
+    {
+      "id": "dog",
+      "title": "Quadruped Robot Dog",
+      "category": "Robotics",
+      "icon": "dog",
+      "date": "",
+      "tagline": "A four-legged walking robot with servo-driven, gait-controlled legs.",
+      "description": "A four-legged walking robot built from the ground up. Each leg is servo-driven, and a custom gait controller coordinates the legs so the robot balances and walks on its own across surfaces.",
+      "highlights": [
+        "Servo-driven legs with coordinated gait control",
+        "Balances across each step for stable walking",
+        "Built and programmed end-to-end with Arduino"
+      ],
+      "tech": [
+        "Arduino",
+        "Servos",
+        "Gait Control"
+      ],
+      "links": []
+    },
+    {
+      "id": "spider",
+      "title": "Quadruped Spider",
+      "category": "Robotics",
+      "icon": "spider",
+      "date": "",
+      "tagline": "A multi-leg spider walker with synchronised servo locomotion.",
+      "description": "A spider-style walking robot that drives many servos in synchrony to produce a smooth, insect-like crawling motion. A study in multi-limb coordination and balance.",
+      "highlights": [
+        "Coordinates many servos for smooth crawling",
+        "Insect-like locomotion across surfaces",
+        "Hands-on multi-servo control"
+      ],
+      "tech": [
+        "Arduino",
+        "Multi-Servo",
+        "Locomotion"
+      ],
+      "links": []
+    },
+    {
+      "id": "selfdrive",
+      "title": "Self-Driving Car",
+      "category": "Autonomous",
+      "icon": "selfdrive",
+      "date": "",
+      "tagline": "An autonomous car prototype that senses and steers itself.",
+      "description": "An autonomous car prototype that senses its surroundings and steers itself using onboard control logic — no hands on the wheel. Combines sensing, decision logic, and motor control.",
+      "highlights": [
+        "Onboard sensing for autonomous navigation",
+        "Self-steering with no manual control",
+        "Sensor data handling and control logic in Python"
+      ],
+      "tech": [
+        "ESP",
+        "Sensors",
+        "Python"
+      ],
+      "links": []
+    },
+    {
+      "id": "obstacle",
+      "title": "Obstacle-Avoiding Car",
+      "category": "Autonomous",
+      "icon": "obstacle",
+      "date": "",
+      "tagline": "Ultrasonic sensing with real-time auto steer-around.",
+      "description": "A robot car that fires ultrasonic pulses to detect obstacles ahead, then autonomously steers around them in real time. A clean demonstration of sense-think-act robotics.",
+      "highlights": [
+        "Ultrasonic obstacle detection",
+        "Real-time autonomous steer-around",
+        "Reliable sense-think-act loop"
+      ],
+      "tech": [
+        "Arduino",
+        "Ultrasonic",
+        "Auto-Steer"
+      ],
+      "links": []
+    },
+    {
+      "id": "smarthome",
+      "title": "Smart Home System",
+      "category": "IoT",
+      "icon": "smarthome",
+      "date": "",
+      "tagline": "Home automation for lights, devices & security — on command.",
+      "description": "A home-automation system that controls lights, appliances, and security remotely through connected ESP microcontrollers. Brings everyday devices online and under control.",
+      "highlights": [
+        "Remote control of lights, appliances & security",
+        "Built around connected ESP microcontrollers",
+        "Practical IoT for the home"
+      ],
+      "tech": [
+        "ESP",
+        "IoT",
+        "Automation"
+      ],
+      "links": []
+    },
+    {
+      "id": "wearable",
+      "title": "Wearable Health Monitor",
+      "category": "IoT",
+      "icon": "wearable",
+      "date": "",
+      "tagline": "A wearable that tracks vital signs in real time.",
+      "description": "A wearable device that tracks vital health signals like heart rate in real time and reports them back to the wearer — engineering meets well-being.",
+      "highlights": [
+        "Real-time vital-sign tracking",
+        "Compact wearable form factor",
+        "Sensor integration with ESP"
+      ],
+      "tech": [
+        "Sensors",
+        "ESP",
+        "Health Tech"
+      ],
+      "links": []
+    },
+    {
+      "id": "doorlock",
+      "title": "Smart Door Lock",
+      "category": "IoT",
+      "icon": "doorlock",
+      "date": "",
+      "tagline": "ESP-based secure electronic access control.",
+      "description": "An electronic smart lock built around an ESP microcontroller, providing secure, controlled access to a door from a connected device.",
+      "highlights": [
+        "Secure electronic access control",
+        "Connected, controllable lock",
+        "Built on ESP"
+      ],
+      "tech": [
+        "ESP",
+        "Access Control",
+        "IoT"
+      ],
+      "links": []
+    },
+    {
+      "id": "voicecalc",
+      "title": "AI Voice Calculator",
+      "category": "AI",
+      "icon": "voicecalc",
+      "date": "",
+      "tagline": "A voice-controlled calculator powered by speech AI.",
+      "description": "A voice-controlled calculator that recognises spoken numbers and operations using speech AI, then returns the result hands-free. A friendly intro to applied AI and voice interfaces.",
+      "highlights": [
+        "Recognises spoken input via speech AI",
+        "Hands-free, voice-driven results",
+        "Applied AI with Python"
+      ],
+      "tech": [
+        "Python",
+        "Speech AI",
+        "Voice UI"
+      ],
+      "links": []
+    }
+  ],
+  "awards": [
+    {
+      "id": "codet",
+      "title": "1st & 3rd Place Overall",
+      "place": "1ST",
+      "event": "CODET Engineering Competition — South-East Zone",
+      "date": "2026",
+      "gold": true,
+      "desc": "Helped lead the team to first and third place overall at the regional CODET (Council of Deans of Engineering & Technology) Engineering Competition, presenting a PET plastic filament recycling machine — qualifying for the national finals in Abuja."
+    }
+  ],
+  "achievements": [
+    {
+      "id": "finalist",
+      "title": "CODET National Finalist",
+      "org": "CODET — Abuja Nationals",
+      "date": "2026",
+      "desc": "Qualified to represent the South-East zone at the national CODET Engineering Competition in Abuja."
+    },
+    {
+      "id": "gdgrain",
+      "title": "GDG & RAIN Community Lead",
+      "org": "FUTO Owerri",
+      "date": "Current",
+      "desc": "Currently leading two campus tech communities — Google Developer Groups and RAIN — driving events and engagement."
+    }
+  ]
+}
