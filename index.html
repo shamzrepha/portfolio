@@ -788,9 +788,11 @@ if (FIREBASE_ENABLED) {
     const auth = getAuth(app);
     const ref = doc(db, 'site', 'data');
 
+    // JSON round-trip drops `undefined` values, which Firestore rejects.
+    const clean = (d) => JSON.parse(JSON.stringify(d));
     FB.getData = async () => { const s = await getDoc(ref); return s.exists() ? s.data() : null; };
-    FB.seed = async (data) => { await setDoc(ref, data); };
-    FB.save = async (data) => { await setDoc(ref, data); };
+    FB.seed = async (data) => { await setDoc(ref, clean(data)); };
+    FB.save = async (data) => { await setDoc(ref, clean(data)); };
     FB.subscribe = (cb) => onSnapshot(ref, (s) => { if (s.exists()) cb(s.data()); });
     FB.signIn = (email, pw) => signInWithEmailAndPassword(auth, email, pw);
     FB.signOut = () => signOut(auth);
@@ -927,7 +929,11 @@ function saveLocal(){ try{localStorage.setItem(LS_KEY,JSON.stringify(DATA));}cat
 async function persist(localMsg){
   if(fbOn()){
     try{ await window.FB.save(DATA); toast('Saved & live ✓'); return; }
-    catch(e){ console.error(e); toast('Save failed — check connection'); return; }
+    catch(e){ console.error(e); const c=(e&&e.code)||''; toast(
+      c==='permission-denied' ? 'Blocked: publish Firestore Rules (authed write)' :
+      c==='unavailable'||c==='failed-precondition' ? 'Create the Firestore database in Firebase first' :
+      c==='unauthenticated' ? 'Session expired — log in again' :
+      ('Save failed: '+(c||e.message||'unknown')) ); return; }
   }
   saveLocal();
   if(localMsg)toast(localMsg);
@@ -1121,7 +1127,11 @@ document.getElementById('aloginbtn').onclick=async()=>{
     const email=document.getElementById('aemail').value.trim(),pw=document.getElementById('apw').value;
     if(!email||!pw){toast('Enter email & password');return;}
     try{ await window.FB.signIn(email,pw); toast('Welcome back, Shamaryah'); }
-    catch(e){ toast('Login failed — check credentials'); }
+    catch(e){ console.error(e); const c=(e&&e.code)||''; toast(
+      c==='auth/operation-not-allowed' ? 'Enable Email/Password in Firebase → Authentication' :
+      c==='auth/invalid-credential'||c==='auth/wrong-password'||c==='auth/user-not-found' ? 'Wrong email or password' :
+      c==='auth/invalid-email' ? 'Invalid email address' :
+      ('Login failed: '+(c||e.message||'unknown')) ); }
     return;
   }
   const v=document.getElementById('apass').value;
