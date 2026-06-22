@@ -659,7 +659,9 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
       <button class="abtn subtle" id="btnReset">↺ Reset to default</button>
       <input type="file" id="importFile" accept="application/json" style="display:none;">
     </div>
-    <div id="fbNote" style="display:none;font-family:var(--mono);font-size:11px;color:var(--green);margin:-12px 0 20px;">● Firebase live — every save publishes instantly to all visitors. Export is just a backup.</div>
+    <div id="fbNote" style="display:none;font-family:var(--mono);font-size:11px;margin:-12px 0 20px;">
+      <span id="fbStatus" style="color:var(--mut)">● Checking Firebase…</span>
+    </div>
 
     <div class="adlayout">
       <div class="aside">
@@ -699,8 +701,8 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
             <div class="afield bigtitle"><label>Title</label><input id="b_title" placeholder="What I learned building the recycler"></div>
             <div class="afield"><label>Write your thoughts…</label><textarea id="b_body" style="min-height:220px;" placeholder="Use **bold**, *italic*, ## heading, and blank lines for paragraphs."></textarea><div class="hint">**bold** · *italic* · ## heading · blank lines split paragraphs.</div></div>
             <div class="afield"><label>Date</label><input id="b_date" placeholder="2026-06-19"></div>
-            <div class="aswitch"><span class="toggle"><input type="checkbox" id="b_published"><span class="tk"></span></span><label>Published</label></div>
-            <button class="abtn solid" style="width:100%;justify-content:center;" data-save="blog">Save Post</button>
+            <div class="aswitch"><span class="toggle"><input type="checkbox" id="b_published" checked><span class="tk"></span></span><label>Published (visible on site)</label></div>
+            <button class="abtn solid" style="width:100%;justify-content:center;font-size:15px;padding:16px;" data-save="blog">📢 Post Live</button>
           </div>
           <div><div class="alist" id="list-blog"></div></div>
         </div>
@@ -928,15 +930,16 @@ async function loadData(){
 function saveLocal(){ try{localStorage.setItem(LS_KEY,JSON.stringify(DATA));}catch(e){toast('Storage full — use image URLs, not uploads');} }
 async function persist(localMsg){
   if(fbOn()){
-    try{ await window.FB.save(DATA); toast('Saved & live ✓'); return; }
+    try{ await window.FB.save(DATA); toast(localMsg||'Saved & live ✓'); return true; }
     catch(e){ console.error(e); const c=(e&&e.code)||''; toast(
-      c==='permission-denied' ? 'Blocked: publish Firestore Rules (authed write)' :
-      c==='unavailable'||c==='failed-precondition' ? 'Create the Firestore database in Firebase first' :
-      c==='unauthenticated' ? 'Session expired — log in again' :
-      ('Save failed: '+(c||e.message||'unknown')) ); return; }
+      c==='permission-denied' ? '🔒 Blocked: publish Firestore Rules → see setup guide' :
+      c==='unavailable'||c==='failed-precondition' ? '⚠️ Create the Firestore database in Firebase first' :
+      c==='unauthenticated' ? '⚠️ Session expired — log out and back in' :
+      ('❌ Save failed: '+(c||e.message||'unknown')) ); return false; }
   }
   saveLocal();
-  if(localMsg)toast(localMsg);
+  if(localMsg)toast(localMsg+' (local only — Firebase not connected)');
+  return true;
 }
 
 /* ============================== UTIL ============================== */
@@ -1111,15 +1114,23 @@ function showAdmin(authed){
   if(authed)renderAdmin();
 }
 /* adapt login UI + auth listener once Firebase is ready */
+function setFbStatus(msg,color){const el=document.getElementById('fbStatus');if(el){el.textContent=msg;el.style.color=color||'var(--mut)';}}
 fbReady().then(()=>{
   const on=fbOn();
   document.getElementById('passLogin').style.display=on?'none':'block';
   document.getElementById('fbLogin').style.display=on?'block':'none';
   document.getElementById('fbNote').style.display=on?'block':'none';
   if(on){
-    window.FB.onAuth(user=>{ FB_AUTHED=!!user; if(location.hash==='#admin')showAdmin(FB_AUTHED); });
-    // realtime public updates
-    window.FB.subscribe(remote=>{ if(!remote)return; DATA=migrate(remote); renderAll(); /* don't clobber admin forms mid-edit — only public views re-render live */ });
+    setFbStatus('● Connecting to Firebase…','var(--mut)');
+    window.FB.onAuth(user=>{
+      FB_AUTHED=!!user;
+      if(user) setFbStatus('● Firebase connected — posts go live instantly','var(--green)');
+      else setFbStatus('● Firebase ready — log in to post','var(--cyan)');
+      if(location.hash==='#admin')showAdmin(FB_AUTHED);
+    });
+    window.FB.subscribe(remote=>{ if(!remote)return; DATA=migrate(remote); renderAll(); });
+  } else {
+    setFbStatus('⚠ Firebase not configured — saves are local only','#f5a623');
   }
 });
 document.getElementById('aloginbtn').onclick=async()=>{
@@ -1208,13 +1219,18 @@ function saveProject(){
 }
 
 /* ---- blog form ---- */
-function clearPost(){b_id.value='';b_title.value='';b_body.value='';b_date.value=todayStr();document.getElementById('b_published').checked=false;}
+function clearPost(){b_id.value='';b_title.value='';b_body.value='';b_date.value=todayStr();document.getElementById('b_published').checked=true;}
 window.editPost=function(id){const p=(DATA.posts||[]).find(x=>x.id===id);if(!p)return;b_id.value=p.id;b_title.value=p.title||'';b_body.value=p.body||'';b_date.value=p.date||todayStr();document.getElementById('b_published').checked=!!p.published;window.scrollTo({top:0,behavior:'smooth'});};
-function savePost(){const t=b_title.value.trim();if(!t){toast('Title required');return;}
+async function savePost(){const t=b_title.value.trim();if(!t){toast('Title required');return;}
+  const btn=document.querySelector('[data-save="blog"]');
+  if(btn){btn.disabled=true;btn.textContent='Posting…';}
   const obj={id:b_id.value||uid(),title:t,body:b_body.value,date:b_date.value.trim()||todayStr(),published:document.getElementById('b_published').checked};
   if(!DATA.posts)DATA.posts=[];
   const i=DATA.posts.findIndex(x=>x.id===obj.id);if(i>=0)DATA.posts[i]=obj;else DATA.posts.unshift(obj);
-  persist('Post saved ✓');renderAdmin();renderBlog();clearPost();}
+  const ok=await persist(obj.published?'Post is live ✓':'Draft saved ✓');
+  if(btn){btn.disabled=false;btn.textContent='📢 Post Live';}
+  if(ok!==false){renderAdmin();renderBlog();clearPost();}
+}
 
 /* ---- award form ---- */
 function clearAward(){a_id.value='';a_title.value='';a_place.value='';a_event.value='';a_desc.value='';a_date.value='';document.getElementById('a_gold').checked=true;}
