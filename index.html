@@ -18,6 +18,30 @@
   --disp:'Space Grotesk',sans-serif; --mono:'IBM Plex Mono',monospace; --body:'IBM Plex Sans',sans-serif;
   --r:14px;
 }
+/* ---- LIGHT MODE ---- */
+@media(prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#F0F4FA; --bg2:#E4ECF7;
+    --ink:#0D1117; --ink-dim:#3A4558; --mut:#7A8BA0;
+    --glass:rgba(255,255,255,.65); --glass-line:rgba(0,0,0,.10);
+    --cyan:#006EBF; --purple:#5B1FBF; --green:#008060;
+    --cyan-glow:rgba(0,110,191,.25); --purple-glow:rgba(91,31,191,.2);
+  }
+}
+[data-theme="light"]{
+  --bg:#F0F4FA; --bg2:#E4ECF7;
+  --ink:#0D1117; --ink-dim:#3A4558; --mut:#7A8BA0;
+  --glass:rgba(255,255,255,.65); --glass-line:rgba(0,0,0,.10);
+  --cyan:#006EBF; --purple:#5B1FBF; --green:#008060;
+  --cyan-glow:rgba(0,110,191,.25); --purple-glow:rgba(91,31,191,.2);
+}
+[data-theme="dark"]{
+  --bg:#050810; --bg2:#080C18;
+  --cyan:#00C8FF; --purple:#7B2FFF; --green:#00FFB3;
+  --cyan-glow:rgba(0,200,255,.35); --purple-glow:rgba(123,47,255,.3);
+  --ink:#E8EDF5; --ink-dim:#8B99B0; --mut:#5A6A82;
+  --glass:rgba(255,255,255,.04); --glass-line:rgba(255,255,255,.09);
+}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:default;}
@@ -38,6 +62,12 @@ img{max-width:100%;display:block;}
   background-size:50px 50px;-webkit-mask-image:radial-gradient(circle at 50% 0%,rgba(0,0,0,.9),transparent 72%);mask-image:radial-gradient(circle at 50% 0%,rgba(0,0,0,.9),transparent 72%);}
 .scan{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.35;
   background:repeating-linear-gradient(180deg,transparent 0 2px,rgba(0,0,0,.18) 2px 3px);mix-blend-mode:overlay;}
+[data-theme="light"] .scan,@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .scan{opacity:.10;mix-blend-mode:multiply;}}
+[data-theme="light"] #net{opacity:.25;}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) #net{opacity:.25;}}
+/* theme toggle button */
+#themeBtn{position:fixed;bottom:60px;right:16px;z-index:55;width:36px;height:36px;border-radius:50%;border:1px solid var(--glass-line);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--ink);font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;}
+#themeBtn:hover{border-color:var(--cyan);box-shadow:0 0 14px var(--cyan-glow);}
 .glow-cursor{position:fixed;left:0;top:0;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:1;
   background:radial-gradient(circle,var(--cyan-glow),transparent 60%);opacity:.55;will-change:transform;}
 .vignette{position:fixed;inset:0;z-index:1;pointer-events:none;box-shadow:inset 0 0 260px 70px rgba(0,0,0,.7);}
@@ -604,6 +634,7 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
 </main>
 
 <footer>SHAMARYAH UDEAKPU · EMBEDDED · HARDWARE · ROBOTICS · PROBLEM SOLVER © 2026 &nbsp;·&nbsp; <a href="#admin">admin</a></footer>
+<button id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
 <a class="adminlink" href="#admin" title="Admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></a>
 
 <!-- ============ PROJECT / BLOG MODAL ============ -->
@@ -1056,6 +1087,7 @@ function renderContact(){
   let h='';
   if(pf.email)h+=`<a class="cc" href="mailto:${esc(pf.email)}"><span class="k">EML</span> ${esc(pf.email)}</a>`;
   if(pf.phone)h+=`<a class="cc" href="tel:${esc(pf.phone.replace(/\s+/g,''))}"><span class="k">TEL</span> ${esc(pf.phone)}</a>`;
+  if(pf.phone){const wa=pf.phone.replace(/[^0-9]/g,'');h+=`<a class="cc" href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener"><span class="k" style="color:#25D366;">WA</span> WhatsApp</a>`;}
   if(pf.linkedin)h+=`<a class="cc" href="${esc(pf.linkedin)}" target="_blank" rel="noopener"><span class="k">IN</span> LinkedIn</a>`;
   if(pf.location)h+=`<span class="cc"><span class="k">LOC</span> ${esc(pf.location)}</span>`;
   g.innerHTML=h;
@@ -1349,6 +1381,29 @@ function runBoot(){
   }
   tick();
 }
+
+/* ============================== THEME TOGGLE ============================== */
+(function(){
+  const root=document.documentElement;
+  const btn=document.getElementById('themeBtn');
+  const DARK_ICONS={dark:'☀️',light:'🌙'};
+  // detect system preference
+  const sysDark=window.matchMedia('(prefers-color-scheme:dark)');
+  function getEffective(){return root.dataset.theme||(sysDark.matches?'dark':'light');}
+  function applyTheme(t){
+    root.dataset.theme=t;
+    try{localStorage.setItem('sham_theme',t);}catch(e){}
+    if(btn) btn.textContent=t==='dark'?'☀️':'🌙';
+  }
+  // init: saved pref → system pref
+  const saved=localStorage.getItem('sham_theme');
+  applyTheme(saved||(sysDark.matches?'dark':'light'));
+  // follow system changes only if user hasn't manually overridden
+  sysDark.addEventListener('change',e=>{
+    if(!localStorage.getItem('sham_theme')) applyTheme(e.matches?'dark':'light');
+  });
+  if(btn) btn.onclick=()=>applyTheme(getEffective()==='dark'?'light':'dark');
+})();
 
 /* ============================== BOOT ============================== */
 (async function(){
