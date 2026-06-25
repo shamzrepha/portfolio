@@ -429,6 +429,12 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
 /* reveal */
 .rv{opacity:0;transform:perspective(1000px) rotateX(22deg) rotateY(-12deg) translateZ(-60px) translateY(45px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);}
 .rv.in{opacity:1;transform:none;}
+/* 3D perspective transforms break inside backdrop-filter on iOS/Android — use 2D on mobile */
+@media(max-width:880px){
+  .rv{transform:translateY(40px) scale(.97);}
+  .rv.in{transform:none;}
+  .assemble .w:nth-child(1),.assemble .w:nth-child(2),.assemble .w:nth-child(3),.assemble .w:nth-child(4),.assemble .w:nth-child(5){transform:translateY(30px) scale(.95)!important;}
+}
 
 @media(max-width:880px){
   nav .navlinks,nav>.navin>.navstatus{display:none;}
