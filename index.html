@@ -500,6 +500,32 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
 /* konami overdrive easter egg */
 body.overdrive{--cyan:#FF3D81;--cyan-glow:rgba(255,61,129,.42);}
 
+/* sound toggle */
+#sndBtn{position:fixed;bottom:104px;right:16px;z-index:55;width:36px;height:36px;border-radius:50%;border:1px solid var(--glass-line);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--ink);font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;}
+#sndBtn:hover{border-color:var(--cyan);box-shadow:0 0 14px var(--cyan-glow);}
+
+/* achievement system */
+#achChip{position:fixed;bottom:16px;left:16px;z-index:55;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--cyan);border:1px solid var(--glass-line);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:20px;padding:8px 14px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.2s;}
+#achChip:hover{border-color:var(--cyan);box-shadow:0 0 16px var(--cyan-glow);}
+#achChip .hexi{color:var(--green);}
+#achChip.pop{animation:achpop .5s cubic-bezier(.2,1.6,.4,1);}
+@keyframes achpop{30%{transform:scale(1.18);}}
+#achPanel{position:fixed;bottom:64px;left:16px;z-index:56;width:min(320px,calc(100vw - 32px));background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--cyan);border-radius:var(--r);padding:18px;display:none;box-shadow:0 0 40px -8px var(--cyan-glow),0 24px 50px -20px #000;}
+#achPanel.open{display:block;animation:rise .3s cubic-bezier(.2,.8,.2,1);}
+#achPanel h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--cyan);text-transform:uppercase;margin-bottom:12px;}
+.achrow{display:flex;align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid var(--glass-line);}
+.achrow:last-child{border-bottom:none;}
+.achrow .hx{width:26px;height:26px;flex:none;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--mut);border:1px solid var(--glass-line);border-radius:8px;}
+.achrow.got .hx{color:#050810;background:var(--green);border-color:var(--green);box-shadow:0 0 12px rgba(0,255,179,.4);}
+.achrow .an{font-family:var(--disp);font-weight:600;font-size:13.5px;}
+.achrow .ad{font-family:var(--mono);font-size:10px;color:var(--mut);margin-top:1px;}
+.achrow:not(.got) .an{color:var(--mut);}
+.toast.ach{border-color:var(--green);color:var(--green);box-shadow:0 0 30px -6px rgba(0,255,179,.45);}
+
+/* oscilloscope */
+#scope{display:block;margin:0 auto 4px;opacity:.8;}
+@media(max-width:480px){#achChip{padding:7px 11px;font-size:10.5px;}#achChip .achword{display:none;}}
+
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;scroll-behavior:auto;}
   .rv{opacity:1;transform:none;transition:none;}
@@ -683,8 +709,11 @@ body.overdrive{--cyan:#FF3D81;--cyan-glow:rgba(255,61,129,.42);}
   </section>
 </main>
 
-<footer><div class="telestrip" id="telestrip"></div>SHAMARYAH UDEAKPU · EMBEDDED · HARDWARE · ROBOTICS · PROBLEM SOLVER © 2026 &nbsp;·&nbsp; <a href="#admin">admin</a></footer>
+<footer><canvas id="scope" width="240" height="30"></canvas><div class="telestrip" id="telestrip"></div>SHAMARYAH UDEAKPU · EMBEDDED · HARDWARE · ROBOTICS · PROBLEM SOLVER © 2026 &nbsp;·&nbsp; <a href="#admin">admin</a></footer>
 <button id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+<button id="sndBtn" title="Toggle interface sounds" aria-label="Toggle sounds">🔇</button>
+<button id="achChip" aria-label="Achievements"><span class="hexi">⬡</span><span id="achN">0</span>/7<span class="achword">&nbsp;COLLECTED</span></button>
+<div id="achPanel"><h4>⬡ Exploration Log</h4><div id="achList2"></div></div>
 <a class="adminlink" href="#admin" title="Admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></a>
 
 <!-- ============ PROJECT / BLOG MODAL ============ -->
@@ -948,7 +977,7 @@ window.dispatchEvent(new Event('fb-ready'));
     renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix();
     if(w>1080){ rig.position.set(3.4,0,0); rig.scale.setScalar(1); }
     else if(w>880){ rig.position.set(2.2,.4,0); rig.scale.setScalar(.85); }
-    else { rig.position.set(0,1.1,-2); rig.scale.setScalar(.72); }
+    else { rig.position.set(0,1.4,-.6); rig.scale.setScalar(.95); } // phones: big and unmissable
   }
   layout(); addEventListener('resize',layout);
 
@@ -1255,6 +1284,7 @@ function attachCV(){
     av.appendChild(ov);
     const lab=ov.querySelector('.cvlab');let iv=null;
     function start(){ov.classList.add('on');clearInterval(iv);let n=0;lab.textContent='SCANNING…';
+      if(window.unlockAch)unlockAch('twin');
       iv=setInterval(()=>{n++;lab.textContent=n>6?'LOCK '+(96+Math.random()*3.9).toFixed(1)+'%':'SCAN '+Math.min(99,n*16)+'%';},180);}
     function stop(){ov.classList.remove('on');clearInterval(iv);}
     av.addEventListener('mouseenter',start);av.addEventListener('mouseleave',stop);
@@ -1281,6 +1311,7 @@ function openProject(id){
   `;
   document.querySelectorAll('#mbody .mthumbs img').forEach(im=>im.onclick=()=>openLightbox(im.dataset.full));
   openModal();
+  if(window.unlockAch)unlockAch('inspect');
 }
 function openPost(id){
   const p=(DATA.posts||[]).find(x=>x.id===id); if(!p)return;
@@ -1290,6 +1321,7 @@ function openPost(id){
     <h2>${esc(p.title)}</h2>
     <div class="mmd">${mdToHtml(p.body||'')}</div>`;
   openModal();
+  if(window.unlockAch)unlockAch('reader');
 }
 function openModal(){const m=document.getElementById('modal');m.classList.add('open');m.scrollTop=0;document.body.style.overflow='hidden';const b=document.getElementById('mprogbar');if(b)b.style.width='0';}
 document.getElementById('modal').addEventListener('scroll',function(){const max=this.scrollHeight-this.clientHeight;const b=document.getElementById('mprogbar');if(b)b.style.width=(max>0?this.scrollTop/max*100:0)+'%';},{passive:true});
@@ -1540,12 +1572,12 @@ function runBoot(){
   ];
   function fmt(s){return esc(s).replace(/\[OK\]/g,'<span class="ok">[OK]</span>').replace(/SYSTEM ONLINE/,'<span class="ok">SYSTEM ONLINE</span>').replace(/SHAMARYAH UDEAKPU/,'<b>SHAMARYAH UDEAKPU</b>');}
   if(reduce){ov.remove();startHero();return;}
-  let li=0,ci=0,html='';
-  ov.addEventListener('click',()=>{li=lines.length;ci=0;}); // tap to skip boot
+  let li=0,ci=0,html='',skipped=false;
+  ov.addEventListener('click',()=>{skipped=true;li=lines.length;ci=0;}); // tap to skip boot
   function tick(){
     if(li>=lines.length){
       bx.innerHTML=lines.map(l=>'<div>'+fmt(l)+'</div>').join('');
-      setTimeout(()=>{ov.classList.add('sweep');setTimeout(()=>{ov.classList.add('gone');startHero();setTimeout(()=>ov.remove(),650);},520);},250);
+      setTimeout(()=>{ov.classList.add('sweep');setTimeout(()=>{ov.classList.add('gone');startHero();if(!skipped&&window.unlockAch)unlockAch('boot');setTimeout(()=>ov.remove(),650);},520);},250);
       return;
     }
     const cur=lines[li];
@@ -1556,6 +1588,74 @@ function runBoot(){
   }
   tick();
 }
+
+/* ============================== SOUND ENGINE ============================== */
+const SND={on:localStorage.getItem('sham_snd')==='1',ctx:null};
+function sfx(kind){
+  if(!SND.on)return;
+  try{
+    if(!SND.ctx)SND.ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const ctx=SND.ctx;if(ctx.state==='suspended')ctx.resume();
+    const t=ctx.currentTime;
+    function tone(f,dur,delay,type,vol){const o=ctx.createOscillator(),g=ctx.createGain();o.type=type||'square';o.frequency.value=f;
+      g.gain.setValueAtTime(vol||.05,t+delay);g.gain.exponentialRampToValueAtTime(.0001,t+delay+dur);
+      o.connect(g);g.connect(ctx.destination);o.start(t+delay);o.stop(t+delay+dur);}
+    if(kind==='click')tone(2100,.04,0,'square',.035);
+    else if(kind==='hover')tone(1500,.025,0,'sine',.02);
+    else if(kind==='unlock'){tone(880,.12,0,'sine',.06);tone(1318,.18,.1,'sine',.06);tone(1760,.24,.2,'sine',.05);}
+    else if(kind==='boot')tone(660,.09,0,'sine',.04);
+  }catch(e){}
+}
+(function(){
+  const b=document.getElementById('sndBtn');if(!b)return;
+  function paint(){b.textContent=SND.on?'🔊':'🔇';}
+  paint();
+  b.onclick=()=>{SND.on=!SND.on;localStorage.setItem('sham_snd',SND.on?'1':'0');paint();if(SND.on)sfx('unlock');toast(SND.on?'Interface sounds ON':'Interface sounds off');};
+  document.addEventListener('click',e=>{const el=e.target.closest('a,button');if(el&&el.id!=='sndBtn')sfx('click');},true);
+})();
+
+/* ============================== ACHIEVEMENT / EXPLORATION SYSTEM ============================== */
+const ACH=[
+  ['boot','System Witness','Watched the full boot sequence'],
+  ['explore','Full Sweep','Explored every section of the site'],
+  ['inspect','Case File Opened','Opened a project file'],
+  ['reader','Deep Reader','Opened a blog post'],
+  ['theme','Light Bender','Switched between light & dark'],
+  ['twin','Digital Twin','Activated the CV avatar scanner'],
+  ['overdrive','Overdrive','Found the Konami code']
+];
+let achState={};try{achState=JSON.parse(localStorage.getItem('sham_ach')||'{}');}catch(e){}
+function renderAch(){
+  const n=ACH.filter(a=>achState[a[0]]).length;
+  const el=document.getElementById('achN');if(el)el.textContent=n;
+  const list=document.getElementById('achList2');
+  if(list)list.innerHTML=ACH.map(a=>`<div class="achrow ${achState[a[0]]?'got':''}"><div class="hx">${achState[a[0]]?'⬢':'⬡'}</div><div><div class="an">${achState[a[0]]?a[1]:'???'}</div><div class="ad">${a[2]}</div></div></div>`).join('');
+}
+function unlock(id){
+  if(achState[id])return;
+  achState[id]=1;try{localStorage.setItem('sham_ach',JSON.stringify(achState));}catch(e){}
+  const a=ACH.find(x=>x[0]===id);
+  const t=document.getElementById('toast');t.classList.add('ach');
+  toast('⬢ COLLECTED — '+a[1].toUpperCase());
+  setTimeout(()=>t.classList.remove('ach'),2600);
+  sfx('unlock');
+  const chip=document.getElementById('achChip');if(chip){chip.classList.add('pop');setTimeout(()=>chip.classList.remove('pop'),550);}
+  renderAch();
+}
+window.unlockAch=unlock;
+renderAch();
+(function(){
+  const chip=document.getElementById('achChip'),panel=document.getElementById('achPanel');
+  if(chip)chip.onclick=()=>panel.classList.toggle('open');
+  document.addEventListener('click',e=>{if(panel&&panel.classList.contains('open')&&!e.target.closest('#achPanel,#achChip'))panel.classList.remove('open');});
+})();
+/* explore: watch all public sections */
+(function(){
+  const need=new Set(['builds','blog','honors','lead','stack','about','contact']);const seen=new Set();
+  // threshold 0: tall sections can never reach 25% visibility on phones
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){seen.add(e.target.id);if(seen.size>=need.size){unlock('explore');io.disconnect();}}});},{threshold:0,rootMargin:'-15% 0px'});
+  need.forEach(id=>{const el=document.getElementById(id);if(el)io.observe(el);});
+})();
 
 /* ============================== HUD / TELEMETRY / EASTER EGGS ============================== */
 /* live clocks */
@@ -1576,6 +1676,23 @@ function runBoot(){
     `<span><span class="tled"></span>BUS <b>${hex()}</b></span>`;}
   tick();if(!reduce)setInterval(tick,2400);})();
 
+/* oscilloscope waveform (footer) */
+(function(){
+  const cv=document.getElementById('scope');if(!cv)return;const c=cv.getContext('2d');let t=0;
+  function draw(){
+    c.clearRect(0,0,240,30);
+    c.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--cyan').trim()||'#00C8FF';
+    c.lineWidth=1.4;c.globalAlpha=.9;c.beginPath();
+    for(let x=0;x<240;x++){
+      const y=15+Math.sin((x+t)*.09)*6*Math.sin((x+t)*.013)+(Math.random()-.5)*1.6;
+      x?c.lineTo(x,y):c.moveTo(x,y);
+    }
+    c.stroke();t+=2.4;
+    if(!reduce)requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
 /* magnetic buttons (desktop) */
 if(!reduce&&!isMobile()){document.querySelectorAll('.btn').forEach(b=>{
   b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.12}px,${(e.clientY-r.top-r.height/2)*.25}px)`;});
@@ -1587,7 +1704,7 @@ console.log('%c⚡ SHAM-OS v3.2 %c— curious engineer detected. Try the Konami 
 (function(){const seq=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let i=0;
   addEventListener('keydown',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;
     i=(k===seq[i])?i+1:(k===seq[0]?1:0);
-    if(i===seq.length){i=0;document.body.classList.toggle('overdrive');toast(document.body.classList.contains('overdrive')?'⚡ OVERDRIVE MODE ENGAGED':'Overdrive disengaged');}});})();
+    if(i===seq.length){i=0;document.body.classList.toggle('overdrive');if(window.unlockAch)unlockAch('overdrive');toast(document.body.classList.contains('overdrive')?'⚡ OVERDRIVE MODE ENGAGED':'Overdrive disengaged');}});})();
 
 /* ============================== THEME TOGGLE ============================== */
 (function(){
@@ -1609,7 +1726,7 @@ console.log('%c⚡ SHAM-OS v3.2 %c— curious engineer detected. Try the Konami 
   sysDark.addEventListener('change',e=>{
     if(!localStorage.getItem('sham_theme')) applyTheme(e.matches?'dark':'light');
   });
-  if(btn) btn.onclick=()=>applyTheme(getEffective()==='dark'?'light':'dark');
+  if(btn) btn.onclick=()=>{applyTheme(getEffective()==='dark'?'light':'dark');if(window.unlockAch)unlockAch('theme');};
 })();
 
 /* ============================== BOOT ============================== */
