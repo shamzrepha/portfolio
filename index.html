@@ -57,6 +57,7 @@ img{max-width:100%;display:block;}
 
 /* ambient layers */
 #net{position:fixed;inset:0;z-index:0;opacity:.9;pointer-events:none;}
+#gl3d{position:fixed;inset:0;z-index:1;pointer-events:none;}
 .gridbg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
   background-image:linear-gradient(rgba(0,200,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.05) 1px,transparent 1px);
   background-size:50px 50px;-webkit-mask-image:radial-gradient(circle at 50% 0%,rgba(0,0,0,.9),transparent 72%);mask-image:radial-gradient(circle at 50% 0%,rgba(0,0,0,.9),transparent 72%);}
@@ -510,6 +511,7 @@ body.overdrive{--cyan:#FF3D81;--cyan-glow:rgba(255,61,129,.42);}
 </head>
 <body>
 <canvas id="net"></canvas>
+<canvas id="gl3d"></canvas>
 <div class="gridbg"></div>
 <div class="scan"></div>
 <div class="glow-cursor" id="glow"></div>
@@ -885,6 +887,107 @@ if (FIREBASE_ENABLED) {
   }
 }
 window.dispatchEvent(new Event('fb-ready'));
+</script>
+
+<script type="module">
+/* ============== 3D REACTOR CORE (Three.js, graceful fallback) ============== */
+(async()=>{
+  const cv=document.getElementById('gl3d');
+  if(!cv||matchMedia('(prefers-reduced-motion:reduce)').matches) { if(cv)cv.remove(); return; }
+  let THREE;
+  try{ THREE=await import('./three.module.min.js'); }
+  catch(e){ try{ THREE=await import('https://unpkg.com/three@0.160.1/build/three.module.js'); }
+    catch(e2){ console.warn('3D core offline',e2); cv.remove(); return; } }
+  let renderer;
+  try{ renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true,powerPreference:'high-performance'}); }
+  catch(e){ console.warn('WebGL unavailable',e); cv.remove(); return; }
+  renderer.setPixelRatio(Math.min(2,devicePixelRatio||1));
+
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,1,0.1,100);
+  cam.position.z=9;
+
+  const CYAN=0x00c8ff, PURPLE=0x7b2fff, GREEN=0x00ffb3;
+  const rig=new THREE.Group(); scene.add(rig);          // mouse/gyro parallax
+  const core=new THREE.Group(); rig.add(core);          // scroll-scrubbed spin
+
+  // outer wireframe shell
+  core.add(new THREE.LineSegments(
+    new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(2.3,1)),
+    new THREE.LineBasicMaterial({color:CYAN,transparent:true,opacity:.55})));
+  // inner counter-rotating heart
+  const inner=new THREE.LineSegments(
+    new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(1.1,0)),
+    new THREE.LineBasicMaterial({color:PURPLE,transparent:true,opacity:.8}));
+  core.add(inner);
+  // glow sprite at the very center
+  const glowTex=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
+    const gr=g.createRadialGradient(64,64,0,64,64,64);gr.addColorStop(0,'rgba(0,200,255,.9)');gr.addColorStop(.35,'rgba(0,200,255,.25)');gr.addColorStop(1,'rgba(0,200,255,0)');
+    g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);})();
+  const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,transparent:true,depthWrite:false}));
+  glow.scale.set(3.4,3.4,1); core.add(glow);
+  // orbit rings
+  const rings=[];
+  [[3.1,CYAN,.35,.5,0],[3.7,PURPLE,.28,-.9,.6],[4.3,GREEN,.16,.35,-1.1]].forEach(([r,col,op,tx,tz])=>{
+    const ring=new THREE.LineLoop(
+      new THREE.BufferGeometry().setFromPoints(Array.from({length:96},(_,i)=>{const a=i/96*Math.PI*2;return new THREE.Vector3(Math.cos(a)*r,0,Math.sin(a)*r);})),
+      new THREE.LineBasicMaterial({color:col,transparent:true,opacity:op}));
+    ring.rotation.x=tx; ring.rotation.z=tz; rings.push(ring); core.add(ring);
+  });
+  // particle swarm in a shell around the core
+  const PN=700, pos=new Float32Array(PN*3);
+  for(let i=0;i<PN;i++){const r=2.9+Math.random()*3.4,t=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(ph)*Math.cos(t);pos[i*3+1]=r*Math.sin(ph)*Math.sin(t);pos[i*3+2]=r*Math.cos(ph);}
+  const pgeo=new THREE.BufferGeometry();pgeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const swarm=new THREE.Points(pgeo,new THREE.PointsMaterial({color:CYAN,size:.035,transparent:true,opacity:.75,sizeAttenuation:true}));
+  core.add(swarm);
+
+  // layout: core sits right-of-center on wide screens, centered + deeper on phones
+  function layout(){
+    const w=innerWidth,h=innerHeight;
+    renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix();
+    if(w>1080){ rig.position.set(3.4,0,0); rig.scale.setScalar(1); }
+    else if(w>880){ rig.position.set(2.2,.4,0); rig.scale.setScalar(.85); }
+    else { rig.position.set(0,1.1,-2); rig.scale.setScalar(.72); }
+  }
+  layout(); addEventListener('resize',layout);
+
+  // pointer / touch / gyro parallax
+  let tx=0,ty=0;
+  addEventListener('mousemove',e=>{tx=(e.clientX/innerWidth-.5)*.7;ty=(e.clientY/innerHeight-.5)*.5;},{passive:true});
+  addEventListener('touchmove',e=>{const t=e.touches[0];if(t){tx=(t.clientX/innerWidth-.5)*.7;ty=(t.clientY/innerHeight-.5)*.5;}},{passive:true});
+  if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission!=='function'){
+    addEventListener('deviceorientation',e=>{if(e.gamma!=null){tx=Math.max(-.7,Math.min(.7,e.gamma/45));ty=Math.max(-.5,Math.min(.5,(e.beta-45)/60));}},{passive:true});
+  }
+
+  const isLight=()=>document.documentElement.dataset.theme==='light'||
+    (!document.documentElement.dataset.theme&&matchMedia('(prefers-color-scheme:light)').matches);
+  const clock=new THREE.Clock();
+  let wasVisible=true;
+  function frame(){
+    requestAnimationFrame(frame);
+    // scroll fade: fully visible over hero, gone by 1.15 viewport heights down
+    const fade=Math.max(0,1-scrollY/(innerHeight*1.15));
+    const vis=fade>0.01&&!document.hidden;
+    cv.style.opacity=(fade*(isLight()?.5:.92)).toFixed(3);
+    if(!vis){wasVisible=false;return;}          // skip GPU work when off-screen
+    if(!wasVisible){clock.getDelta();wasVisible=true;}
+    const dt=Math.min(.05,clock.getDelta()), t=clock.elapsedTime;
+    // scroll scrubs the core rotation (Apple-style), time keeps it alive
+    core.rotation.y=t*.12+scrollY*.0022;
+    core.rotation.x=Math.sin(t*.18)*.12+scrollY*.0006;
+    inner.rotation.y=-t*.5; inner.rotation.x=t*.3;
+    swarm.rotation.y=t*.05;
+    rings.forEach((r,i)=>{r.rotation.y+=dt*(.12+i*.07);});
+    glow.material.opacity=.55+.25*Math.sin(t*2.1);
+    // eased parallax
+    rig.rotation.y+=((tx*.9)-rig.rotation.y)*.06;
+    rig.rotation.x+=((ty*.7)-rig.rotation.x)*.06;
+    cam.position.z=9-Math.min(1.6,scrollY*.002); // gentle dolly-in as you scroll
+    renderer.render(scene,cam);
+  }
+  frame();
+})();
 </script>
 
 <script>
