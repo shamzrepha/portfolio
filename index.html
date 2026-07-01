@@ -464,6 +464,41 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
   .adash{padding:22px 16px 70px;}
   .cgrid .cc{width:100%;justify-content:center;}
 }
+/* HUD telemetry (hero) */
+.hud{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:18px;font-family:var(--mono);font-size:10.5px;color:var(--mut);letter-spacing:.05em;}
+.hud b{color:var(--cyan);font-weight:500;}
+.hud .hln{display:flex;align-items:center;gap:7px;white-space:nowrap;}
+.hud .dotg{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2.2s infinite;}
+
+/* CV digital-twin overlay on avatars */
+.hp-av,.profcard .pic{position:relative;}
+.cvov{position:absolute;inset:0;z-index:5;opacity:0;transition:opacity .25s;pointer-events:none;border-radius:inherit;}
+.cvov.on{opacity:1;}
+.cvov .ring{position:absolute;inset:4%;border:1.5px dashed rgba(0,200,255,.8);border-radius:50%;animation:cvspin 7s linear infinite;box-shadow:0 0 14px var(--cyan-glow),inset 0 0 14px var(--cyan-glow);}
+@keyframes cvspin{to{transform:rotate(360deg);}}
+.cvov .cvscan{position:absolute;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 10px var(--cyan-glow);animation:cvscan 1.6s ease-in-out infinite;}
+@keyframes cvscan{0%{top:12%;}50%{top:84%;}100%{top:12%;}}
+.cvov .cvlab{position:absolute;left:50%;bottom:10%;transform:translateX(-50%);white-space:nowrap;font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--green);background:rgba(5,8,16,.85);border:1px solid var(--green);border-radius:5px;padding:1px 7px;}
+.hp-av .cvlab{display:none;}
+
+/* footer hardware telemetry strip */
+.telestrip{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;font-family:var(--mono);font-size:10px;color:var(--mut);letter-spacing:.06em;padding-bottom:16px;}
+.telestrip span b{color:var(--cyan);font-weight:500;}
+.telestrip .tled{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);margin-right:6px;animation:blink 1.4s steps(1) infinite;}
+.telestrip .tled.c{background:var(--cyan);box-shadow:0 0 6px var(--cyan);animation-duration:2.3s;}
+.telestrip .tled.p{background:var(--purple);box-shadow:0 0 6px var(--purple);animation-duration:1.9s;}
+
+/* copy chip on contact */
+.cc .cpy{margin-left:2px;font-size:12px;color:var(--mut);border:1px solid var(--glass-line);border-radius:5px;padding:1px 7px;cursor:copy;transition:.2s;}
+.cc:hover .cpy{color:inherit;border-color:currentColor;}
+
+/* modal reading progress */
+.modal .mprog{position:fixed;top:0;left:0;right:0;height:3px;z-index:10;pointer-events:none;}
+.modal .mprog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));box-shadow:0 0 10px var(--cyan-glow);}
+
+/* konami overdrive easter egg */
+body.overdrive{--cyan:#FF3D81;--cyan-glow:rgba(255,61,129,.42);}
+
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;scroll-behavior:auto;}
   .rv{opacity:1;transform:none;transition:none;}
@@ -507,6 +542,13 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
       <div class="eyebrow"><span class="bar"></span>EMBEDDED · HARDWARE · ROBOTICS · PROBLEM SOLVING</div>
       <h1 class="assemble" id="heroH1"><span class="w">I</span> <span class="w">think,</span> <span class="w">build,</span><br><span class="w">and</span> <span class="w neon">solve.</span></h1>
       <div class="sub">> Shamaryah Udeakpu <span class="c">|</span> Engineer · Thinker · Builder</div>
+      <div class="hud" id="heroHud">
+        <span class="hln"><span class="dotg"></span>SYS <b>ONLINE</b></span>
+        <span class="hln">UTC <b id="hudUtc">--:--:--</b></span>
+        <span class="hln">LOCAL <b id="hudLoc">--:--:--</b></span>
+        <span class="hln">PWR <b>3.3V</b></span>
+        <span class="hln">LINK <b id="hudLink">SYNCING…</b></span>
+      </div>
       <p class="thesis">First a <b>thinker and problem solver</b> — robotics just happens to be my main field. I build from <b>embedded systems and circuits</b> up through <b>hardware</b> and full <b>mechanical robots</b>, reaching for <b>AI</b> where it earns its place. Mechatronics student at FUTO, <b>GDG &amp; RAIN community lead</b>, CODET '26 1st place. I take the problems others walk past.</p>
       <div class="cta">
         <a class="btn" href="#builds">EXPLORE THE BUILDS <span class="ar">→</span></a>
@@ -639,13 +681,14 @@ body.admin-mode main,body.admin-mode nav,body.admin-mode footer,body.admin-mode 
   </section>
 </main>
 
-<footer>SHAMARYAH UDEAKPU · EMBEDDED · HARDWARE · ROBOTICS · PROBLEM SOLVER © 2026 &nbsp;·&nbsp; <a href="#admin">admin</a></footer>
+<footer><div class="telestrip" id="telestrip"></div>SHAMARYAH UDEAKPU · EMBEDDED · HARDWARE · ROBOTICS · PROBLEM SOLVER © 2026 &nbsp;·&nbsp; <a href="#admin">admin</a></footer>
 <button id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
 <a class="adminlink" href="#admin" title="Admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></a>
 
 <!-- ============ PROJECT / BLOG MODAL ============ -->
 <div class="modal" id="modal">
   <div class="backdrop" data-close></div>
+  <div class="mprog"><i id="mprogbar"></i></div>
   <div class="mpanel">
     <button class="mclose" data-close>✕</button>
     <div class="mhero" id="mhero"></div>
@@ -1041,8 +1084,9 @@ function renderBlog(){
   const pub=(DATA.posts||[]).filter(p=>p.published);
   if(!pub.length){wrap.innerHTML='<div class="bgempty">Thoughts incoming — check back soon.</div>';observeReveal();return;}
   wrap.innerHTML='<div class="bggrid">'+pub.map(p=>{
-    const ex=stripMd(p.body).slice(0,200);
-    return `<article class="bgcard" data-post="${esc(p.id)}"><div class="bd">${esc(p.date||'')}</div><h3>${esc(p.title)}</h3><div class="ex">${esc(ex)}${stripMd(p.body).length>200?'…':''}</div><div class="more">Read more →</div></article>`;
+    const plain=stripMd(p.body),ex=plain.slice(0,200);
+    const mins=Math.max(1,Math.round(plain.split(/\s+/).filter(Boolean).length/200));
+    return `<article class="bgcard" data-post="${esc(p.id)}"><div class="bd">${esc(p.date||'')} · ${mins} min read</div><h3>${esc(p.title)}</h3><div class="ex">${esc(ex)}${plain.length>200?'…':''}</div><div class="more">Read more →</div></article>`;
   }).join('')+'</div>';
   wrap.querySelectorAll('[data-post]').forEach(c=>c.onclick=()=>openPost(c.dataset.post));
   observeReveal();
@@ -1091,14 +1135,30 @@ function renderHeroProfile(){
 function renderContact(){
   const pf=DATA.profile;const g=document.getElementById('contactGrid');
   let h='';
-  if(pf.email)h+=`<a class="cc" href="mailto:${esc(pf.email)}"><span class="k">EML</span> ${esc(pf.email)}</a>`;
-  if(pf.phone)h+=`<a class="cc" href="tel:${esc(pf.phone.replace(/\s+/g,''))}"><span class="k">TEL</span> ${esc(pf.phone)}</a>`;
+  if(pf.email)h+=`<a class="cc" href="mailto:${esc(pf.email)}"><span class="k">EML</span> ${esc(pf.email)}<span class="cpy" data-copy="${esc(pf.email)}" title="Copy">⧉</span></a>`;
+  if(pf.phone)h+=`<a class="cc" href="tel:${esc(pf.phone.replace(/\s+/g,''))}"><span class="k">TEL</span> ${esc(pf.phone)}<span class="cpy" data-copy="${esc(pf.phone)}" title="Copy">⧉</span></a>`;
   if(pf.phone){const wa=pf.phone.replace(/[^0-9]/g,'');h+=`<a class="cc" href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener"><span class="k" style="color:#25D366;">WA</span> WhatsApp</a>`;}
   if(pf.linkedin)h+=`<a class="cc" href="${esc(pf.linkedin)}" target="_blank" rel="noopener"><span class="k">IN</span> LinkedIn</a>`;
   if(pf.location)h+=`<span class="cc"><span class="k">LOC</span> ${esc(pf.location)}</span>`;
   g.innerHTML=h;
+  g.querySelectorAll('.cpy').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();if(navigator.clipboard)navigator.clipboard.writeText(b.dataset.copy).then(()=>toast('Copied ✓'),()=>toast('Copy failed'));});
 }
-function renderAll(){renderFilters();renderProjects();renderBlog();renderHonors();renderProfile();renderHeroProfile();renderContact();}
+/* digital-twin CV tracking overlay on avatars (hover on desktop, tap on mobile) */
+function attachCV(){
+  document.querySelectorAll('.hp-av,#profCard .pic').forEach(av=>{
+    if(av.querySelector('.cvov'))return;
+    const ov=document.createElement('div');ov.className='cvov';
+    ov.innerHTML='<div class="ring"></div><div class="cvscan"></div><div class="cvlab">SCANNING…</div>';
+    av.appendChild(ov);
+    const lab=ov.querySelector('.cvlab');let iv=null;
+    function start(){ov.classList.add('on');clearInterval(iv);let n=0;lab.textContent='SCANNING…';
+      iv=setInterval(()=>{n++;lab.textContent=n>6?'LOCK '+(96+Math.random()*3.9).toFixed(1)+'%':'SCAN '+Math.min(99,n*16)+'%';},180);}
+    function stop(){ov.classList.remove('on');clearInterval(iv);}
+    av.addEventListener('mouseenter',start);av.addEventListener('mouseleave',stop);
+    av.addEventListener('touchstart',()=>{ov.classList.contains('on')?stop():start();},{passive:true});
+  });
+}
+function renderAll(){renderFilters();renderProjects();renderBlog();renderHonors();renderProfile();renderHeroProfile();renderContact();attachCV();}
 
 /* ============================== MODAL ============================== */
 function openProject(id){
@@ -1123,12 +1183,13 @@ function openPost(id){
   const p=(DATA.posts||[]).find(x=>x.id===id); if(!p)return;
   document.getElementById('mhero').innerHTML=`<div class="ic"><svg viewBox="0 0 200 130" ${S}><path d="M50 30 h70 l30 30 v70 h-100 Z"/><path d="M120 30 v30 h30"/><path d="M68 80 h64 M68 96 h64 M68 64 h30"/></svg></div>`;
   document.getElementById('mbody').innerHTML=`
-    <div class="mcat"><span style="width:7px;height:7px;background:var(--cyan);transform:rotate(45deg);box-shadow:0 0 8px var(--cyan-glow);"></span>BLOG${p.date?` · ${esc(p.date)}`:''}</div>
+    <div class="mcat"><span style="width:7px;height:7px;background:var(--cyan);transform:rotate(45deg);box-shadow:0 0 8px var(--cyan-glow);"></span>BLOG${p.date?` · ${esc(p.date)}`:''} · ${Math.max(1,Math.round(stripMd(p.body).split(/\s+/).filter(Boolean).length/200))} MIN READ</div>
     <h2>${esc(p.title)}</h2>
     <div class="mmd">${mdToHtml(p.body||'')}</div>`;
   openModal();
 }
-function openModal(){const m=document.getElementById('modal');m.classList.add('open');document.body.style.overflow='hidden';}
+function openModal(){const m=document.getElementById('modal');m.classList.add('open');m.scrollTop=0;document.body.style.overflow='hidden';const b=document.getElementById('mprogbar');if(b)b.style.width='0';}
+document.getElementById('modal').addEventListener('scroll',function(){const max=this.scrollHeight-this.clientHeight;const b=document.getElementById('mprogbar');if(b)b.style.width=(max>0?this.scrollTop/max*100:0)+'%';},{passive:true});
 function closeModal(){document.getElementById('modal').classList.remove('open');if(!document.getElementById('lightbox').classList.contains('open'))document.body.style.overflow='';}
 document.querySelectorAll('[data-close]').forEach(e=>e.onclick=closeModal);
 
@@ -1155,6 +1216,7 @@ function showAdmin(authed){
 function setFbStatus(msg,color){const el=document.getElementById('fbStatus');if(el){el.textContent=msg;el.style.color=color||'var(--mut)';}}
 fbReady().then(()=>{
   const on=fbOn();
+  const hl=document.getElementById('hudLink');if(hl)hl.textContent=on?'FIRESTORE LIVE':'LOCAL CACHE';
   document.getElementById('passLogin').style.display=on?'none':'block';
   document.getElementById('fbLogin').style.display=on?'block':'none';
   document.getElementById('fbNote').style.display=on?'block':'none';
@@ -1347,10 +1409,13 @@ function counters(){if(_counted)return;_counted=true;document.querySelectorAll('
 new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){counters();o.disconnect();}})},{threshold:.4}).observe(document.querySelector('.stats'));
 
 /* node network */
-(function(){const cv=document.getElementById('net');if(!cv)return;const c=cv.getContext('2d');let nodes;
+(function(){const cv=document.getElementById('net');if(!cv)return;const c=cv.getContext('2d');let nodes,stars;
   function size(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;c.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);}
-  function init(){size();const n=Math.min(80,Math.floor(innerWidth/15));nodes=[];for(let i=0;i<n;i++)nodes.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,pulse:Math.random()<.15,ph:Math.random()*Math.PI*2});}
-  function draw(){const W=innerWidth,H=innerHeight;c.clearRect(0,0,W,H);for(const p of nodes){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;p.ph+=.03;}
+  function init(){size();const n=Math.min(80,Math.floor(innerWidth/15));nodes=[];for(let i=0;i<n;i++)nodes.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,pulse:Math.random()<.15,ph:Math.random()*Math.PI*2});
+    stars=[];const sn=Math.min(140,Math.floor(innerWidth/9));for(let i=0;i<sn;i++)stars.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.3+.4,ph:Math.random()*Math.PI*2,sp:.008+Math.random()*.02});}
+  function draw(){const W=innerWidth,H=innerHeight;c.clearRect(0,0,W,H);
+    for(const s of stars){s.ph+=s.sp;const a=.18+.3*(.5+.5*Math.sin(s.ph));c.fillStyle='rgba(205,230,255,'+a.toFixed(3)+')';c.fillRect(s.x,s.y,s.r,s.r);}
+    for(const p of nodes){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;p.ph+=.03;}
     for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);if(d<155){c.strokeStyle='rgba(0,200,255,'+((1-d/155)*.45).toFixed(3)+')';c.lineWidth=1;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.stroke();}}
     for(const p of nodes){if(p.pulse){const g=.55+.45*Math.sin(p.ph);c.fillStyle='rgba(0,200,255,'+g.toFixed(2)+')';c.beginPath();c.arc(p.x,p.y,2.6,0,7);c.fill();c.fillStyle='rgba(0,200,255,'+(g*.18).toFixed(2)+')';c.beginPath();c.arc(p.x,p.y,7,0,7);c.fill();}else{c.fillStyle='rgba(0,200,255,.85)';c.fillRect(p.x-1.3,p.y-1.3,2.6,2.6);}}
     if(!reduce)requestAnimationFrame(draw);}
@@ -1361,18 +1426,19 @@ function startHero(){const h=document.getElementById('heroH1');if(h&&!reduce)h.c
 function runBoot(){
   const ov=document.getElementById('bootov'),bx=document.getElementById('bootbx');
   const lines=[
-    '> BOOT_INIT :: shamaryah.portfolio.sys',
-    '> loading embedded_core .............. [OK]',
-    '> loading robotics_modules ........... [OK]',
-    '> loading problem_solver ............. [OK]',
-    '> connecting to the future ........... [OK]',
-    '> user :: SHAMARYAH UDEAKPU',
-    '> role :: ENGINEER · THINKER · BUILDER',
-    '> status :: READY'
+    '[ 0.000000] booting SHAM-OS v3.2 :: shamaryah.portfolio.sys',
+    '[ 0.041233] init embedded_core .............. [OK]',
+    '[ 0.183502] mounting robotics_modules ....... [OK]',
+    '[ 0.412087] loading cv_engine + ai_stack .... [OK]',
+    '[ 0.734519] uplink firestore.realtime ....... [OK]',
+    '[ 1.002347] user :: SHAMARYAH UDEAKPU',
+    '[ 1.002501] role :: ENGINEER · THINKER · PROBLEM SOLVER',
+    '[ 1.148890] all systems nominal :: SYSTEM ONLINE'
   ];
-  function fmt(s){return esc(s).replace(/\[OK\]/g,'<span class="ok">[OK]</span>').replace(/SHAMARYAH UDEAKPU/,'<b>SHAMARYAH UDEAKPU</b>');}
+  function fmt(s){return esc(s).replace(/\[OK\]/g,'<span class="ok">[OK]</span>').replace(/SYSTEM ONLINE/,'<span class="ok">SYSTEM ONLINE</span>').replace(/SHAMARYAH UDEAKPU/,'<b>SHAMARYAH UDEAKPU</b>');}
   if(reduce){ov.remove();startHero();return;}
   let li=0,ci=0,html='';
+  ov.addEventListener('click',()=>{li=lines.length;ci=0;}); // tap to skip boot
   function tick(){
     if(li>=lines.length){
       bx.innerHTML=lines.map(l=>'<div>'+fmt(l)+'</div>').join('');
@@ -1387,6 +1453,38 @@ function runBoot(){
   }
   tick();
 }
+
+/* ============================== HUD / TELEMETRY / EASTER EGGS ============================== */
+/* live clocks */
+(function(){const u=document.getElementById('hudUtc'),l=document.getElementById('hudLoc');if(!u||!l)return;
+  const p=n=>String(n).padStart(2,'0');
+  function tick(){const d=new Date();u.textContent=p(d.getUTCHours())+':'+p(d.getUTCMinutes())+':'+p(d.getUTCSeconds());l.textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());}
+  tick();setInterval(tick,1000);})();
+
+/* footer hardware telemetry (decorative) */
+(function(){const el=document.getElementById('telestrip');if(!el)return;
+  const r=(a,b)=>a+Math.random()*(b-a);
+  const hex=()=>'0x'+Math.floor(Math.random()*0xFFFF).toString(16).toUpperCase().padStart(4,'0');
+  function tick(){el.innerHTML=
+    `<span><span class="tled"></span>PWR <b>3.30V</b></span>`+
+    `<span><span class="tled c"></span>MCU <b>${r(31,39).toFixed(1)}°C</b></span>`+
+    `<span><span class="tled p"></span>RSSI <b>-${Math.floor(r(38,62))} dBm</b></span>`+
+    `<span><span class="tled c"></span>MEM <b>${Math.floor(r(34,58))}%</b></span>`+
+    `<span><span class="tled"></span>BUS <b>${hex()}</b></span>`;}
+  tick();if(!reduce)setInterval(tick,2400);})();
+
+/* magnetic buttons (desktop) */
+if(!reduce&&!isMobile()){document.querySelectorAll('.btn').forEach(b=>{
+  b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.12}px,${(e.clientY-r.top-r.height/2)*.25}px)`;});
+  b.addEventListener('mouseleave',()=>{b.style.transform='';});
+});}
+
+/* easter eggs */
+console.log('%c⚡ SHAM-OS v3.2 %c— curious engineer detected. Try the Konami code: ↑↑↓↓←→←→BA','font-family:monospace;color:#00C8FF;font-size:14px;font-weight:bold;','font-family:monospace;color:#8B99B0;');
+(function(){const seq=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let i=0;
+  addEventListener('keydown',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;
+    i=(k===seq[i])?i+1:(k===seq[0]?1:0);
+    if(i===seq.length){i=0;document.body.classList.toggle('overdrive');toast(document.body.classList.contains('overdrive')?'⚡ OVERDRIVE MODE ENGAGED':'Overdrive disengaged');}});})();
 
 /* ============================== THEME TOGGLE ============================== */
 (function(){
