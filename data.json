@@ -2,7 +2,7 @@
   "profile": {
     "name": "Shamaryah Udeakpu",
     "title": "Embedded Systems · Robotics · Hardware Engineer",
-    "bio": "I'm a mechatronics engineering student at FUTO who thinks in systems and builds in the real world. From embedded microcontrollers to full mechanical assemblies — I tackle problems others walk past. Community lead for GDG and RAIN at FUTO, CODET 1st place winner, and a lifelong builder looking for engineering internships.",
+    "bio": "I'm a mechatronics engineering student at FUTO who thinks in systems and builds in the real world. From embedded microcontrollers to full mechanical assemblies — I tackle problems others walk past. GDG Embedded Systems and Robotics Lead and RAIN community lead at FUTO, CODET 1st place winner, and a lifelong builder looking for engineering internships.",
     "photo": "",
     "location": "Owerri, Nigeria",
     "email": "shamzypre14@gmail.com",
@@ -12,50 +12,220 @@
   },
   "projects": [
     {
+      "id": "sunroot",
+      "title": "SunrootLearn",
+      "category": "EdTech",
+      "icon": "sunroot",
+      "date": "2026",
+      "tagline": "An AI tutor and virtual lab for every student, and a live mastery map for every teacher.",
+      "problem": "Students pass exams on topics they never really understood, and teachers only find out after the exam. Most schools cannot afford labs, so hands-on STEM stays out of reach.",
+      "solution": "A teacher uploads a syllabus and the AI drafts the topic map, lessons, two-voice podcasts in eight languages, simulations and quizzes. The teacher approves what students see. Learners study, run virtual labs and play quests, and a Bayesian Knowledge Tracing model keeps a per-topic 'cognitive twin' of what each student really knows.",
+      "result": "A live web app and Android app with a class mastery heatmap, six quest task types, a circuit bench and 3D robotics, and more than 3,900 automated tests run on every change. The next step is a classroom pilot to measure real learning gains.",
+      "description": "Built by Shamaryah as founder. It grew out of two earlier builds, CogniTwin AI and the SunRoot study lab, and now runs as one platform for teachers and learners. The pitch is honest about what is not proven yet: learning gains in a real class.",
+      "highlights": [
+        "Teacher stays in control: nothing reaches students until it is approved and pushed",
+        "Per-topic mastery heatmap instead of a single exam score",
+        "Maker Studio: circuits, 3D, block coding and C++",
+        "Native Android app with in-app updates"
+      ],
+      "tech": [
+        "Next.js",
+        "TypeScript",
+        "Firebase",
+        "Gemini",
+        "Bayesian Knowledge Tracing",
+        "Tailwind",
+        "Vitest",
+        "Android"
+      ],
+      "links": [
+        {
+          "label": "Live app",
+          "url": "https://sunrootlearn.vercel.app"
+        },
+        {
+          "label": "Source on GitHub",
+          "url": "https://github.com/shamzrepha/synapta"
+        },
+        {
+          "label": "Earlier version: CogniTwin AI",
+          "url": "https://github.com/shamzrepha/cognitwin"
+        },
+        {
+          "label": "Pitch deck",
+          "url": "https://claude.ai/artifact/6HUxTbBwYRtGNNua7CSMMe"
+        },
+        {
+          "label": "Demo deck",
+          "url": "https://claude.ai/artifact/VXsbPngtNUyQdmGPrbZ2vS"
+        },
+        {
+          "label": "STEM festival pitch",
+          "url": "https://claude.ai/artifact/4iGW8mi7dGWPnVLZeYGCA9"
+        },
+        {
+          "label": "Launch campaign",
+          "url": "https://claude.ai/artifact/3zcXvc3wfkbPj5QEYAY6n9"
+        }
+      ],
+      "image": "img/sunroot-poster.jpg",
+      "images": [
+        "img/sunroot-mastery.jpg",
+        "img/sunroot-learn.jpg",
+        "img/sunroot-sim.jpg",
+        "img/sunroot-circuit.jpg",
+        "img/sunroot-quiz.jpg"
+      ],
+      "featured": false,
+      "catalog": "v5",
+      "rev": 2
+    },
+    {
+      "id": "ecovital",
+      "title": "EcoVital",
+      "category": "IoT",
+      "icon": "pod",
+      "date": "2026",
+      "tagline": "Air monitoring that speaks: your air, explained out loud, with advice you can act on.",
+      "problem": "Dust, stale air and dry or humid rooms hurt classrooms, offices and homes, but nobody notices until people feel unwell. Typical monitors show numbers that mean little to most people.",
+      "solution": "A small ESP32 pod reads dust, air quality, temperature and humidity, shows them on a round dial and says what is wrong and what to do, in English, Naija Pidgin, Igbo, Yoruba or Hausa. A web app and Android app handle pairing, live dashboards, short-term forecasts, an Ask EcoVital assistant, emergency alerts and over-the-air firmware updates.",
+      "result": "A working pod and cloud platform. Its first public showing was the AI Builders Pitch Party at FUTO on 4 November 2026. Readings are labelled Measured or Estimated and shown as relative indexes, never as lab units.",
+      "description": "Each pod enrolls itself with a private token, pairs to an account with a six-character code, and keeps working through quiet hours and Wi-Fi drops. Forecasts come from a small ridge regression per reading that is only used when it beats a no-change guess.",
+      "highlights": [
+        "Spoken advice in five languages",
+        "Early-warning forecasts at +10, +30 and +60 minutes",
+        "Emergency siren and one-tap 112 calling on Android",
+        "Honest by design: no medical claims, no fake units"
+      ],
+      "tech": [
+        "ESP32",
+        "GP2Y1010AU0F dust",
+        "MQ135",
+        "DHT22",
+        "ST7735 display",
+        "MAX98357A speaker",
+        "Next.js",
+        "Postgres",
+        "Gemini",
+        "Android"
+      ],
+      "links": [
+        {
+          "label": "Source on GitHub",
+          "url": "https://github.com/shamzrepha/ecovital"
+        },
+        {
+          "label": "Wiring blueprint",
+          "url": "https://claude.ai/artifact/BxX29xijj8wr7mkzeKVNBG"
+        },
+        {
+          "label": "Dust sensor close-up",
+          "url": "https://claude.ai/artifact/LFMcMZUAPUUAVW6y6FS3nz"
+        },
+        {
+          "label": "Pitch deck",
+          "url": "https://claude.ai/artifact/VGHHAW7v3FYv3muKk3x8wD"
+        }
+      ],
+      "image": "img/ecovital-site.jpg",
+      "images": [
+        "img/ecovital-wiring.jpg"
+      ],
+      "featured": false,
+      "catalog": "v5",
+      "rev": 2
+    },
+    {
+      "id": "scout",
+      "title": "Scout Screener",
+      "category": "AI",
+      "icon": "cvrank",
+      "date": "2026",
+      "tagline": "Rank candidates against a role and see the evidence from each CV. The AI suggests. A human decides.",
+      "problem": "Recruiters at early-stage startups read hundreds of CVs and rank them by gut feeling, so good candidates are missed. AI screeners often hide why someone scored well, and can quietly reject people.",
+      "solution": "Scout scores every CV against the role requirements and quotes the exact line that backs each one. 'Not stated in the CV' means verify, never reject. Employers get a job pipeline, a candidate drawer and an Ask Scout assistant. Candidates upload a CV once, see where they would rank and apply to roles they choose.",
+      "result": "A working hiring platform with ranked candidate lists, evidence tables, short apply links, optional accounts and a three-question candidate chat. Contact details stay private until the candidate agrees, and records expire automatically.",
+      "description": "Built around the principle that the AI never makes a hire or reject decision. It works without an AI key using keyword matching, and with a Groq key it adds AI screening, interview chat and CV photo reading.",
+      "highlights": [
+        "Every score is backed by a quote from the CV",
+        "Privacy first: consent-based contact details, 30-day expiry",
+        "Kanban pipeline per job with drag to move stages",
+        "Works in demo mode with no setup"
+      ],
+      "tech": [
+        "JavaScript",
+        "Vercel functions",
+        "Groq LLM",
+        "Upstash Redis",
+        "PBKDF2 auth",
+        "Playwright tests"
+      ],
+      "links": [
+        {
+          "label": "Source on GitHub",
+          "url": "https://github.com/shamzrepha/recruit"
+        }
+      ],
+      "image": "img/scout-results.jpg",
+      "images": [
+        "img/scout-home.jpg",
+        "img/scout-detail.jpg"
+      ],
+      "featured": false,
+      "catalog": "v5",
+      "rev": 2
+    },
+    {
       "id": "autodiag",
       "title": "AutoDiag-Point",
       "category": "Healthtech",
       "icon": "diagnostic",
       "date": "2026",
       "tagline": "A phone-powered reader for malaria rapid tests, built for clinics with no lab and no internet.",
-      "description": "Most malaria rapid tests in rural Nigeria are read by eye, once, and never recorded. AutoDiag-Point is a reader that does the looking. A health worker loads up to seven test cassettes into a rotating tray inside a light-tight housing. An ESP32 turns each slot under the phone over Bluetooth and sets the LED ring brightness for every photo. The phone app crops the cassette, finds the control line, and measures the Pf line at its fixed place across five photos. It returns positive, faint positive, negative, uncertain or invalid with plain advice, and keeps the photos as a record for follow-up. Built for the USPF Changemaker Challenge 2026 (Healthcare, Imo State). On the bench on 7 November 2026 it read five cassettes in one tray and agreed with the human reading on all five.",
+      "problem": "Most malaria rapid tests in rural Nigeria are read by eye, once, and never recorded. Many real positive lines are only 2 to 10% as dark as the control line, which is easy to miss.",
+      "solution": "Cassettes sit in a light-tight tray or rotary disk under a phone camera. An ESP32 turns each slot into place over Bluetooth and sets the LED ring brightness. The phone crops each cassette, finds the control line, measures the Pf line across five photos and returns positive, faint positive, negative, uncertain or invalid, with plain advice.",
+      "result": "A working prototype. On the bench on 7 November 2026 it read five cassettes in one tray and agreed with the human reading on all five. A kiosk version with a waste chute and sharps container is modelled in 3D. Built for the USPF Changemaker Challenge 2026.",
+      "description": "The result photos in the gallery are real strips from that bench run. The reader keeps the photos of every result as a record for follow-up and works fully offline.",
       "highlights": [
-        "Reads 7 cassettes per batch, 5 photos per cassette, fully offline",
-        "ESP32 rotates the tray and controls the LED ring over Bluetooth",
-        "Measures real test lines as faint as 2 to 10% of the control line, which are easy to miss by eye",
-        "Keeps a photo record of every result for follow-up"
+        "7 cassettes per batch, 5 photos each",
+        "Rotary-disk kiosk concept with ArUco markers, status LEDs and biohazard bin",
+        "Photo record of every result for follow-up",
+        "Works offline"
       ],
       "tech": [
         "ESP32",
+        "Stepper motor",
         "Bluetooth LE",
-        "Computer vision",
         "LED ring",
+        "Computer vision",
         "Mobile app",
-        "3D housing"
+        "Three.js model"
       ],
       "links": [
         {
-          "label": "AutoDiag-Point page",
-          "url": "https://claude.ai/artifact/WKTsMmJ63cqWuqGRbEEL7i"
+          "label": "Kiosk 3D model",
+          "url": "https://claude.ai/artifact/N1mG8tBnxDkViZJgPuRGJM"
         },
         {
-          "label": "Kiosk build",
-          "url": "https://claude.ai/artifact/N1mG8tBnxDkViZJgPuRGJM"
+          "label": "Reader 3D model",
+          "url": "https://claude.ai/artifact/WKTsMmJ63cqWuqGRbEEL7i"
         },
         {
           "label": "Team, roadmap and pitch",
           "url": "https://claude.ai/artifact/PuxAdPfv3VMppPB4YFbXU1"
         }
       ],
-      "image": "img/autodiag-1.jpg",
+      "image": "img/autodiag-kiosk.jpg",
       "images": [
+        "img/autodiag-reader.jpg",
         "img/autodiag-1.jpg",
         "img/autodiag-2.jpg",
         "img/autodiag-3.jpg",
         "img/autodiag-4.jpg"
       ],
+      "featured": false,
       "catalog": "v5",
-      "featured": false
+      "rev": 2
     },
     {
       "id": "depthbyear",
@@ -64,12 +234,15 @@
       "icon": "ear",
       "date": "2026",
       "tagline": "A wearable that turns the shape of a room into sound a blind user can place by ear.",
-      "description": "Depth by Ear scans a room with time-of-flight and ultrasonic sensors mounted on a two-servo pan/tilt gimbal. A phone fuses that range data with its own camera to tell people from furniture, then plays the result back as binaural sound, so distance, direction and what is out there arrive as something the ear can place instead of something that has to be read. The work includes a full research brief, a link-budget analysis for the Bluetooth connection, a sonification design with a strict cap on how many objects speak at once, and a Nigeria-specific cost study covering Naira pricing, unreliable grid power and the budget phones real users own. Two browser prototypes let you hear the mapping before any hardware exists.",
+      "problem": "Blindness in Nigeria is large and growing, and about 84% of it is avoidable, yet imported assistive devices price most people out. Existing wearables mostly give haptic buzzes, not a sense of where things are.",
+      "solution": "Time-of-flight and ultrasonic sensors on a two-servo pan/tilt gimbal scan the room. A phone fuses the range data with its camera to tell people from furniture, points the gimbal at what matters over Bluetooth, and plays the result as binaural 3D sound with a cap of 3 to 5 voices so silence stays the default.",
+      "result": "A full research brief, a link budget that fits a throttled 20 Hz Bluetooth stream, a costed Nigeria build, and two working browser simulators: one for the gimbal sweep and pointing logic, one for hearing the sound mapping. Hardware is the next phase.",
+      "description": "The simulator on the cover is the gimbal state machine running a sample scan: the wide wedge is the camera view, the bright wedge is the sensor beam, and objects appear as they are sensed.",
       "highlights": [
-        "Closed loop: the phone points the gimbal at what the camera sees, and the gimbal returns angle and distance over BLE",
-        "Link budget worked out: throttled to about 20 Hz to fit a pessimistic Bluetooth connection with headroom",
-        "Sonification caps output to the 3 to 5 most relevant objects so silence is the default",
-        "Costed for Nigeria: about N103,000 to N140,000 from single-unit retail, with a bulk-import path to close the gap"
+        "Closed loop: camera points the sensor, sensor reports angle and distance",
+        "Costed for Nigeria: about N103,000 to N140,000 retail with a bulk-import path to close the gap",
+        "Designed for unreliable power and mid-range Android phones",
+        "Web Audio HRTF prototype to test the sound design before any hardware"
       ],
       "tech": [
         "ESP32",
@@ -93,10 +266,129 @@
           "url": "https://claude.ai/artifact/DniCbARJL9Epk7Tn2X4Ma7"
         }
       ],
-      "image": "img/depthbyear.jpg",
+      "image": "img/depth-gimbal.jpg",
       "images": [],
+      "featured": false,
       "catalog": "v5",
-      "featured": false
+      "rev": 2
+    },
+    {
+      "id": "saryx",
+      "title": "SARYX Robot Dashboard",
+      "category": "Robotics",
+      "icon": "robotphone",
+      "date": "2026",
+      "tagline": "A web control room that drives a robot through its phone, with live video, map and telemetry.",
+      "problem": "Driving a robot remotely normally needs custom radios and a lot of hardware, which makes small robots hard to build, test and demo.",
+      "solution": "The robot's brain is a phone. It streams live video over WebRTC and publishes position and sensor data. The dashboard shows the stream, a live map, wheel encoder ticks, ultrasonic distance and bump status, and sends manual and training commands, waypoint recording and a remote lock command, all through Firebase.",
+      "result": "A deployable Next.js dashboard with a defined Firebase data model for telemetry, position, commands and WebRTC signaling, ready to pair with the robot phone app.",
+      "highlights": [
+        "WebRTC video with Firestore signaling",
+        "Realtime Database for commands and telemetry",
+        "Manual and training drive modes with waypoint recording",
+        "Ships to Vercel with environment-based config"
+      ],
+      "tech": [
+        "Next.js",
+        "WebRTC",
+        "Firebase Realtime DB",
+        "Firestore",
+        "Vercel"
+      ],
+      "links": [
+        {
+          "label": "Source on GitHub",
+          "url": "https://github.com/shamzrepha/saryx-dashboard"
+        }
+      ],
+      "image": "",
+      "images": [],
+      "featured": false,
+      "catalog": "v5",
+      "rev": 2
+    },
+    {
+      "id": "classair",
+      "title": "ClassAir",
+      "category": "Sustainability",
+      "icon": "airpurifier",
+      "date": "2026",
+      "tagline": "A classroom air purifier with a water-mist stage, built to be tested, not assumed.",
+      "problem": "Chalk dust and stale air build up in crowded classrooms, and commercial purifiers cost too much for most schools.",
+      "solution": "Room air passes a dust sensor, rises through an ultrasonic water mist and a droplet mesh, then foam, carbon and HEPA-type media before a 12 V fan pushes it out. An ESP32 smooths the dust reading, sets fan speed in three steps and switches the mist off above 60% humidity.",
+      "result": "A Phase 1 bench unit fully designed in a 3D assembly model with an explode slider, part-by-part fitting notes, wiring and build steps. A chalk-dust test with the unit off, fan only and fan plus mist decides whether the mist stays.",
+      "description": "Dust readings use a median of 15 samples plus a moving average. The mist stage adds roughly N12,000 to the earlier N41,500 estimate and is treated as an experiment.",
+      "highlights": [
+        "Three-step fan curve: 30 / 60 / 100%",
+        "Humidity guard against mould",
+        "Droplet mesh keeps filters dry",
+        "Scale check: bench proof first, box-fan version for full classrooms"
+      ],
+      "tech": [
+        "ESP32",
+        "GP2Y dust sensor",
+        "DHT22",
+        "PWM fan",
+        "Ultrasonic mist",
+        "MOSFET drivers"
+      ],
+      "links": [
+        {
+          "label": "3D assembly model",
+          "url": "https://claude.ai/artifact/LbjKYa9anosxFDTY2Gwpdq"
+        },
+        {
+          "label": "Blueprint",
+          "url": "https://claude.ai/artifact/CCFJQk1m2PiukDQhAXSZtR"
+        }
+      ],
+      "image": "img/classair-3d.jpg",
+      "images": [],
+      "featured": false,
+      "catalog": "v5",
+      "rev": 2
+    },
+    {
+      "id": "glucosestack",
+      "title": "Glucose Wearable Sensor Stack",
+      "category": "Healthtech",
+      "icon": "glucose",
+      "date": "2026",
+      "tagline": "A nine-part wrist module for glucose-trend and cardiovascular screening research.",
+      "problem": "Fingerprick glucose checks are painful and give only occasional readings. No non-invasive sensor has been validated to replace a glucometer, so any attempt needs honest ground truth.",
+      "solution": "An ESP32-S3 wrist module combines short-wave infrared, bioimpedance, PPG and ECG, spectral skin tone, skin temperature, motion and ambient climate sensors. Each has one job, and a phone model learns from all of them against paired fingerprick or CGM readings.",
+      "result": "A 3D walkthrough of the module with a measurement cycle you can step through, an interactive sensor explorer with live traces, an I2C address map, the features the model sees, and a three-phase build order with go or no-go gates. It is a research prototype, not a medical device.",
+      "highlights": [
+        "Found and fixed an I2C address collision",
+        "Phases prove the signal before a custom PCB",
+        "Ethics approval and NAFDAC rules called out up front"
+      ],
+      "tech": [
+        "ESP32-S3",
+        "SWIR / NIR",
+        "MAX86150",
+        "AD5941",
+        "AS7341",
+        "TMP117",
+        "BMI270"
+      ],
+      "links": [
+        {
+          "label": "Sensor explorer",
+          "url": "https://claude.ai/artifact/6zgbxvUfsTaaKs4BBFqjLT"
+        },
+        {
+          "label": "3D walkthrough",
+          "url": "https://claude.ai/artifact/Lo3gwk8VCjEGoxRi4srTYs"
+        }
+      ],
+      "image": "img/glucose-3d.jpg",
+      "images": [
+        "img/glucose.jpg"
+      ],
+      "featured": false,
+      "catalog": "v5",
+      "rev": 2
     },
     {
       "id": "airmouse",
@@ -105,12 +397,13 @@
       "icon": "airmouse",
       "date": "2026",
       "tagline": "A finger-worn air mouse: tilt to move, pinch to click.",
-      "description": "A wearable mouse that lives on the index finger. An MPU6050 motion sensor and a TTP223 touch pad sit on the fingertip, so moving the hand moves the cursor and pinching the pad clicks. Six thin wires run to an ESP32-C3 Mini on the back of the hand, powered by a small LiPo cell through a TP4056 charger, with an optional vibration motor for click feedback. The wiring diagram colours every wire by the signal it carries and includes a tick-off wire list and pre-power-on checks.",
+      "problem": "Pointing devices need a desk or big arm gestures, and presenters and people on the move have no small, comfortable alternative.",
+      "solution": "An MPU6050 motion sensor and a TTP223 touch pad sit on the fingertip so hand motion moves the cursor and a thumb pinch clicks. Six thin wires run to an ESP32-C3 Mini on the back of the hand, powered by a small LiPo through a TP4056, with an optional vibration motor for click feedback.",
+      "result": "A complete build package: a colour-coded wiring diagram with a tick-off wire list, a to-scale placement guide for the hand, axis orientation and pre-power-on checks.",
       "highlights": [
-        "MPU6050 motion sensing with a data-ready interrupt and a timer fallback",
-        "Pinch-to-click touch pad, no moving parts",
-        "Rechargeable 100 to 200 mAh LiPo with TP4056 protection",
-        "Optional haptic click through a transistor-driven vibration motor"
+        "Data-ready interrupt with a timer fallback",
+        "Pinch-to-click, no moving parts",
+        "Rechargeable 100 to 200 mAh LiPo"
       ],
       "tech": [
         "ESP32-C3",
@@ -130,149 +423,44 @@
           "url": "https://claude.ai/artifact/Gy1fN4e8q8pRLFHYX6qYbX"
         }
       ],
-      "image": "img/airmouse.jpg",
-      "images": [],
+      "image": "img/airmouse-placement.jpg",
+      "images": [
+        "img/airmouse.jpg"
+      ],
+      "featured": false,
       "catalog": "v5",
-      "featured": false
+      "rev": 2
     },
     {
-      "id": "classair",
-      "title": "ClassAir and EcoVital",
-      "category": "Sustainability",
-      "icon": "airpurifier",
-      "date": "2026",
-      "tagline": "A classroom air purifier that also watches the air and warns early.",
-      "description": "ClassAir is a bench-unit air purifier for classrooms. Room air enters through side slots, passes a dust sensor, rises through a fine water mist and a droplet-catching mesh, then goes through foam, activated carbon and HEPA-type media before a 12 V fan pushes it out of the top. An ESP32 reads the dust sensor, smooths the signal, sets the fan speed in three steps and switches the mist off when humidity passes 60%. The mist stage is treated as an experiment: a chalk-dust test with the unit off, fan only, and fan plus mist decides whether it stays. EcoVital is the product pitch built on top of it: don't just clean the air, monitor it, understand it, and warn people early.",
-      "highlights": [
-        "Full 3D assembly model with an explode slider, part-by-part fitting notes, wiring and build steps",
-        "Dust reading smoothed with a median of 15 samples plus a moving average, driving a 30 / 60 / 100% fan curve",
-        "Humidity guard keeps the mist from encouraging mould",
-        "Chalk-dust test plan to prove each stage rather than assume it works"
-      ],
-      "tech": [
-        "ESP32",
-        "GP2Y dust sensor",
-        "DHT22",
-        "PWM fan",
-        "Ultrasonic mist",
-        "MOSFET drivers"
-      ],
-      "links": [
-        {
-          "label": "3D blueprint",
-          "url": "https://claude.ai/artifact/LbjKYa9anosxFDTY2Gwpdq"
-        },
-        {
-          "label": "Blueprint",
-          "url": "https://claude.ai/artifact/CCFJQk1m2PiukDQhAXSZtR"
-        },
-        {
-          "label": "EcoVital wiring",
-          "url": "https://claude.ai/artifact/BxX29xijj8wr7mkzeKVNBG"
-        },
-        {
-          "label": "Dust sensor close-up",
-          "url": "https://claude.ai/artifact/LFMcMZUAPUUAVW6y6FS3nz"
-        },
-        {
-          "label": "EcoVital pitch deck",
-          "url": "https://claude.ai/artifact/VGHHAW7v3FYv3muKk3x8wD"
-        }
-      ],
-      "image": "",
-      "images": [],
-      "catalog": "v5",
-      "featured": false
-    },
-    {
-      "id": "glucosestack",
-      "title": "Glucose Wearable Sensor Stack",
+      "id": "healthmon",
+      "title": "Patient History Dashboard",
       "category": "Healthtech",
-      "icon": "glucose",
+      "icon": "health",
       "date": "2026",
-      "tagline": "A nine-part wrist module for glucose-trend and cardiovascular screening research.",
-      "description": "A research prototype for a wrist-worn module built around an ESP32-S3. Short-wave infrared, bioimpedance, PPG and ECG, spectral skin-tone, skin temperature, motion and ambient climate sensors each have one job, and the model learns from all of them together. The page is an interactive exploded drawing: tap any part to see what it measures, why it is on the board, a live signal trace, its bus address and where to source it. It also lays out the I2C address map, the features the model sees, and a three-phase build order that proves the signal before committing to a custom board. It is deliberately honest about scope: no non-invasive sensor has been validated to replace a glucometer, so every reading needs paired fingerprick or CGM ground truth.",
+      "tagline": "Day, week and month charts of a patient monitor’s logged readings.",
+      "problem": "A bedside monitor shows the current number, but nobody can see how a patient's readings changed over hours or days.",
+      "solution": "A web dashboard that reads logged readings from Google Sheets and charts them, with day (hourly average), week, month and all-time views and date pickers.",
+      "result": "A working history dashboard built with Chart.js that turns a spreadsheet log into trend charts.",
       "highlights": [
-        "Nine sensors, each with one job: glucose signal, cardiovascular, correction, or compute and power",
-        "I2C address collision found and resolved (ADS1115 moved to 0x49)",
-        "Three build phases, each with a go or no-go gate",
-        "Ethics and NAFDAC medical-device rules called out up front"
+        "Hourly and daily averaging",
+        "Day, week, month and all-time views"
       ],
       "tech": [
-        "ESP32-S3",
-        "SWIR / NIR",
-        "MAX86150",
-        "AD5941",
-        "AS7341",
-        "TMP117",
-        "BMI270"
+        "JavaScript",
+        "Chart.js",
+        "Google Sheets"
       ],
       "links": [
         {
-          "label": "Sensor stack explorer",
-          "url": "https://claude.ai/artifact/6zgbxvUfsTaaKs4BBFqjLT"
-        },
-        {
-          "label": "Wrist module walkthrough",
-          "url": "https://claude.ai/artifact/Lo3gwk8VCjEGoxRi4srTYs"
-        }
-      ],
-      "image": "img/glucose.jpg",
-      "images": [],
-      "catalog": "v5",
-      "featured": false
-    },
-    {
-      "id": "sunroot",
-      "title": "SunrootLearn",
-      "category": "EdTech",
-      "icon": "sunroot",
-      "date": "2026",
-      "tagline": "Turns a teacher's syllabus into a living class and measures real understanding, topic by topic.",
-      "description": "For students who pass exams on topics they never really understood. A teacher uploads a syllabus or notes, the AI drafts a topic map, lecture note, podcast, simulation and quiz, the teacher edits and approves, and students only see what was pushed. Every answer updates a mastery score and a heatmap shows the teacher who is stuck, on what, while there is still time to help. It works for any subject, and includes a Maker Studio for circuits, 3D, block coding and C++. It is a live web app on phone and laptop with more than 3,900 automated tests run on every change. The pitch is explicit about what is not proven yet: learning gains in a real class are what the pilot measures.",
-      "highlights": [
-        "Teacher stays in control: nothing reaches students until it is approved and pushed",
-        "Per-topic mastery heatmap instead of a single exam score",
-        "Maker Studio with circuits, 3D, block coding and C++",
-        "More than 3,900 automated tests run on every change"
-      ],
-      "tech": [
-        "Web app",
-        "Generative AI",
-        "Mastery tracking",
-        "Maker Studio",
-        "Pitch & launch campaign"
-      ],
-      "links": [
-        {
-          "label": "Pitch",
-          "url": "https://claude.ai/artifact/2gs6hUavxV8b2BaEffLaAU"
-        },
-        {
-          "label": "Pitch deck",
-          "url": "https://claude.ai/artifact/6HUxTbBwYRtGNNua7CSMMe"
-        },
-        {
-          "label": "STEM festival pitch",
-          "url": "https://claude.ai/artifact/4iGW8mi7dGWPnVLZeYGCA9"
-        },
-        {
-          "label": "Demo deck",
-          "url": "https://claude.ai/artifact/VXsbPngtNUyQdmGPrbZ2vS"
-        },
-        {
-          "label": "Launch campaign",
-          "url": "https://claude.ai/artifact/3zcXvc3wfkbPj5QEYAY6n9"
-        },
-        {
-          "label": "Social flyers",
-          "url": "https://claude.ai/artifact/57wv2iCaJeJrE6CYXGD7oq"
+          "label": "Source on GitHub",
+          "url": "https://github.com/shamzrepha/health_monitor"
         }
       ],
       "image": "",
       "images": [],
+      "featured": false,
       "catalog": "v5",
-      "featured": false
+      "rev": 2
     },
     {
       "id": "oledsim",
@@ -281,11 +469,12 @@
       "icon": "oled",
       "date": "2026",
       "tagline": "Test your ESP32 text paging logic in the browser before wiring a display.",
-      "description": "A small tool for embedded developers. Type or paste the message an ESP32 will show and it is split into screen-sized pages exactly as an SSD1306 128 by 64 OLED would render it, at size 1 (21 columns by 8 rows) or size 2 (10 columns by 4 rows). It handles word wrap, hard line breaks and over-long words, with previous and next controls and a list of every page chunk to jump between.",
+      "problem": "Debugging how text wraps and pages on a small OLED means flashing hardware again and again.",
+      "solution": "Type the message an ESP32 will show and it is split into screen-sized pages exactly as an SSD1306 128 by 64 display would render it, at size 1 (21 by 8) or size 2 (10 by 4).",
+      "result": "A working simulator with word wrap, hard breaks, long-word splitting, page controls and a tap-to-jump chunk list.",
       "highlights": [
         "Matches the real 6x8 and 12x16 character grids",
-        "Word wrap, hard breaks and long-word splitting",
-        "Page indicator and tap-to-jump chunk list"
+        "Tap-to-jump page list"
       ],
       "tech": [
         "JavaScript",
@@ -301,8 +490,9 @@
       ],
       "image": "img/oled.jpg",
       "images": [],
+      "featured": false,
       "catalog": "v5",
-      "featured": false
+      "rev": 2
     },
     {
       "id": "ngmap",
@@ -311,7 +501,9 @@
       "icon": "map",
       "date": "2026",
       "tagline": "45 startup ideas matched to real problems in Nigeria.",
-      "description": "A research map that pairs forty-five startup ideas with concrete problems people face in Nigeria, used to decide which problems are worth building for.",
+      "problem": "Founders often pick an idea first and look for a problem second.",
+      "solution": "A map that pairs forty-five startup ideas with concrete problems people face in Nigeria.",
+      "result": "A reference map used to decide which problems are worth building for.",
       "highlights": [
         "45 ideas mapped to specific local problems"
       ],
@@ -327,8 +519,9 @@
       ],
       "image": "",
       "images": [],
+      "featured": false,
       "catalog": "v5",
-      "featured": false
+      "rev": 2
     },
     {
       "id": "pet",
@@ -353,7 +546,10 @@
       ],
       "links": [],
       "image": "",
-      "images": []
+      "images": [],
+      "problem": "Plastic bottles pile up as waste, while 3D-printer filament stays expensive for makers.",
+      "solution": "A machine that melts and extrudes recycled PET into filament with controlled heating and extrusion.",
+      "result": "Won 1st and 3rd place overall at the CODET South-East competition and qualified for the national finals in Abuja."
     },
     {
       "id": "dog",
@@ -375,7 +571,10 @@
       ],
       "links": [],
       "image": "",
-      "images": []
+      "images": [],
+      "problem": "Wheels struggle on rough ground and steps. Legged robots handle them but need careful leg coordination.",
+      "solution": "Four servo-driven legs, with a custom gait controller on Arduino that coordinates them to keep balance.",
+      "result": "A quadruped that balances and walks on its own across surfaces."
     },
     {
       "id": "spider",
@@ -397,7 +596,10 @@
       ],
       "links": [],
       "image": "",
-      "images": []
+      "images": [],
+      "problem": "Multi-legged walkers are hard to coordinate smoothly.",
+      "solution": "Many servos driven in synchrony to produce a smooth, insect-like crawl.",
+      "result": "A working spider walker that crawls across surfaces."
     },
     {
       "id": "selfdrive",
@@ -419,7 +621,10 @@
       ],
       "links": [],
       "image": "",
-      "images": []
+      "images": [],
+      "problem": "A car needs a driver to go anywhere.",
+      "solution": "Onboard sensors, decision logic in Python and motor control let the car sense its surroundings and steer itself.",
+      "result": "An autonomous car prototype that drives with no hands on the wheel."
     },
     {
       "id": "obstacle",
@@ -441,7 +646,10 @@
       ],
       "links": [],
       "image": "",
-      "images": []
+      "images": [],
+      "problem": "A moving robot must avoid crashing into things it cannot see.",
+      "solution": "An ultrasonic sensor pings ahead and the car steers around obstacles in real time with a sense-think-act loop.",
+      "result": "A car that detects obstacles and steers around them on its own."
     },
     {
       "id": "smarthome",
@@ -463,7 +671,10 @@
       ],
       "links": [],
       "image": "",
-      "images": []
+      "images": [],
+      "problem": "Lights, appliances and door security are controlled by hand, and only when you are there.",
+      "solution": "Connected ESP microcontrollers put lights, devices and security online and under remote control.",
+      "result": "A working home-automation system for lights, appliances and security."
     },
     {
       "id": "wearable",
@@ -485,7 +696,10 @@
       ],
       "links": [],
       "image": "",
-      "images": []
+      "images": [],
+      "problem": "Vital signs such as heart rate are only checked occasionally.",
+      "solution": "A wearable with sensors and an ESP microcontroller tracks vital signs continuously and reports them to the wearer.",
+      "result": "A wearable that tracks vital signs in real time."
     },
     {
       "id": "doorlock",
@@ -507,7 +721,10 @@
       ],
       "links": [],
       "image": "",
-      "images": []
+      "images": [],
+      "problem": "Metal keys get lost, copied or forgotten.",
+      "solution": "An ESP-based electronic lock gives controlled access to a door from a connected device.",
+      "result": "A working smart lock providing secure, controlled access."
     },
     {
       "id": "voicecalc",
@@ -529,10 +746,24 @@
       ],
       "links": [],
       "image": "",
-      "images": []
+      "images": [],
+      "problem": "Calculators need hands and eyes.",
+      "solution": "Speech AI in Python recognises spoken numbers and operations and returns the result.",
+      "result": "A hands-free, voice-driven calculator."
     }
   ],
   "awards": [
+    {
+      "id": "aibuilders",
+      "title": "Top 10 Finalist · 5th Place",
+      "place": "5TH",
+      "event": "AI Builders Pitch Party · FUTO",
+      "date": "2026",
+      "gold": true,
+      "desc": "Selected as one of the top 10 finalists at the AI Builders Pitch Party, then placed 5th after the finals.",
+      "catalog": "v5",
+      "rev": 2
+    },
     {
       "id": "codet",
       "title": "1st & 3rd Place Overall",
@@ -553,10 +784,13 @@
     },
     {
       "id": "gdgrain",
-      "title": "GDG & RAIN Community Lead",
-      "org": "FUTO Owerri",
+      "title": "GDG Embedded Systems & Robotics Lead",
+      "org": "Google Developer Group · FUTO",
       "date": "Current",
-      "desc": "Currently leading two campus tech communities — Google Developer Groups and RAIN — driving events and engagement."
+      "desc": "Leading the embedded systems and robotics community at Google Developer Group FUTO, and the RAIN student tech community.",
+      "catalog": "v5",
+      "rev": 2,
+      "legacyTitle": "GDG & RAIN Community Lead"
     }
   ],
   "posts": []
