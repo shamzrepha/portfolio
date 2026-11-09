@@ -12,6 +12,325 @@
   },
   "projects": [
     {
+      "id": "autodiag",
+      "title": "AutoDiag-Point",
+      "category": "Healthtech",
+      "icon": "diagnostic",
+      "date": "2026",
+      "tagline": "A phone-powered reader for malaria rapid tests, built for clinics with no lab and no internet.",
+      "description": "Most malaria rapid tests in rural Nigeria are read by eye, once, and never recorded. AutoDiag-Point is a reader that does the looking. A health worker loads up to seven test cassettes into a rotating tray inside a light-tight housing. An ESP32 turns each slot under the phone over Bluetooth and sets the LED ring brightness for every photo. The phone app crops the cassette, finds the control line, and measures the Pf line at its fixed place across five photos. It returns positive, faint positive, negative, uncertain or invalid with plain advice, and keeps the photos as a record for follow-up. Built for the USPF Changemaker Challenge 2026 (Healthcare, Imo State). On the bench on 7 November 2026 it read five cassettes in one tray and agreed with the human reading on all five.",
+      "highlights": [
+        "Reads 7 cassettes per batch, 5 photos per cassette, fully offline",
+        "ESP32 rotates the tray and controls the LED ring over Bluetooth",
+        "Measures real test lines as faint as 2 to 10% of the control line, which are easy to miss by eye",
+        "Keeps a photo record of every result for follow-up"
+      ],
+      "tech": [
+        "ESP32",
+        "Bluetooth LE",
+        "Computer vision",
+        "LED ring",
+        "Mobile app",
+        "3D housing"
+      ],
+      "links": [
+        {
+          "label": "AutoDiag-Point page",
+          "url": "https://claude.ai/artifact/WKTsMmJ63cqWuqGRbEEL7i"
+        },
+        {
+          "label": "Kiosk build",
+          "url": "https://claude.ai/artifact/N1mG8tBnxDkViZJgPuRGJM"
+        },
+        {
+          "label": "Team, roadmap and pitch",
+          "url": "https://claude.ai/artifact/PuxAdPfv3VMppPB4YFbXU1"
+        }
+      ],
+      "image": "img/autodiag-1.jpg",
+      "images": [
+        "img/autodiag-1.jpg",
+        "img/autodiag-2.jpg",
+        "img/autodiag-3.jpg",
+        "img/autodiag-4.jpg"
+      ],
+      "catalog": "v5",
+      "featured": false
+    },
+    {
+      "id": "depthbyear",
+      "title": "Depth by Ear",
+      "category": "Assistive Tech",
+      "icon": "ear",
+      "date": "2026",
+      "tagline": "A wearable that turns the shape of a room into sound a blind user can place by ear.",
+      "description": "Depth by Ear scans a room with time-of-flight and ultrasonic sensors mounted on a two-servo pan/tilt gimbal. A phone fuses that range data with its own camera to tell people from furniture, then plays the result back as binaural sound, so distance, direction and what is out there arrive as something the ear can place instead of something that has to be read. The work includes a full research brief, a link-budget analysis for the Bluetooth connection, a sonification design with a strict cap on how many objects speak at once, and a Nigeria-specific cost study covering Naira pricing, unreliable grid power and the budget phones real users own. Two browser prototypes let you hear the mapping before any hardware exists.",
+      "highlights": [
+        "Closed loop: the phone points the gimbal at what the camera sees, and the gimbal returns angle and distance over BLE",
+        "Link budget worked out: throttled to about 20 Hz to fit a pessimistic Bluetooth connection with headroom",
+        "Sonification caps output to the 3 to 5 most relevant objects so silence is the default",
+        "Costed for Nigeria: about N103,000 to N140,000 from single-unit retail, with a bulk-import path to close the gap"
+      ],
+      "tech": [
+        "ESP32",
+        "VL53L5CX ToF",
+        "Ultrasonic",
+        "Pan/tilt servos",
+        "Web Audio HRTF",
+        "BLE"
+      ],
+      "links": [
+        {
+          "label": "Research brief",
+          "url": "https://claude.ai/artifact/9U283HprHu4edJZXT3si8K"
+        },
+        {
+          "label": "Gimbal simulator",
+          "url": "https://claude.ai/artifact/Rj9znpUXAzQuoJzmKueTky"
+        },
+        {
+          "label": "Sonification bench",
+          "url": "https://claude.ai/artifact/DniCbARJL9Epk7Tn2X4Ma7"
+        }
+      ],
+      "image": "img/depthbyear.jpg",
+      "images": [],
+      "catalog": "v5",
+      "featured": false
+    },
+    {
+      "id": "airmouse",
+      "title": "Fingertip Air Mouse",
+      "category": "Hardware",
+      "icon": "airmouse",
+      "date": "2026",
+      "tagline": "A finger-worn air mouse: tilt to move, pinch to click.",
+      "description": "A wearable mouse that lives on the index finger. An MPU6050 motion sensor and a TTP223 touch pad sit on the fingertip, so moving the hand moves the cursor and pinching the pad clicks. Six thin wires run to an ESP32-C3 Mini on the back of the hand, powered by a small LiPo cell through a TP4056 charger, with an optional vibration motor for click feedback. The wiring diagram colours every wire by the signal it carries and includes a tick-off wire list and pre-power-on checks.",
+      "highlights": [
+        "MPU6050 motion sensing with a data-ready interrupt and a timer fallback",
+        "Pinch-to-click touch pad, no moving parts",
+        "Rechargeable 100 to 200 mAh LiPo with TP4056 protection",
+        "Optional haptic click through a transistor-driven vibration motor"
+      ],
+      "tech": [
+        "ESP32-C3",
+        "MPU6050",
+        "TTP223",
+        "TP4056",
+        "LiPo",
+        "I2C"
+      ],
+      "links": [
+        {
+          "label": "Wiring diagram",
+          "url": "https://claude.ai/artifact/C3h9zfPT8dd2ARuSQtGkbo"
+        },
+        {
+          "label": "Placement guide",
+          "url": "https://claude.ai/artifact/Gy1fN4e8q8pRLFHYX6qYbX"
+        }
+      ],
+      "image": "img/airmouse.jpg",
+      "images": [],
+      "catalog": "v5",
+      "featured": false
+    },
+    {
+      "id": "classair",
+      "title": "ClassAir and EcoVital",
+      "category": "Sustainability",
+      "icon": "airpurifier",
+      "date": "2026",
+      "tagline": "A classroom air purifier that also watches the air and warns early.",
+      "description": "ClassAir is a bench-unit air purifier for classrooms. Room air enters through side slots, passes a dust sensor, rises through a fine water mist and a droplet-catching mesh, then goes through foam, activated carbon and HEPA-type media before a 12 V fan pushes it out of the top. An ESP32 reads the dust sensor, smooths the signal, sets the fan speed in three steps and switches the mist off when humidity passes 60%. The mist stage is treated as an experiment: a chalk-dust test with the unit off, fan only, and fan plus mist decides whether it stays. EcoVital is the product pitch built on top of it: don't just clean the air, monitor it, understand it, and warn people early.",
+      "highlights": [
+        "Full 3D assembly model with an explode slider, part-by-part fitting notes, wiring and build steps",
+        "Dust reading smoothed with a median of 15 samples plus a moving average, driving a 30 / 60 / 100% fan curve",
+        "Humidity guard keeps the mist from encouraging mould",
+        "Chalk-dust test plan to prove each stage rather than assume it works"
+      ],
+      "tech": [
+        "ESP32",
+        "GP2Y dust sensor",
+        "DHT22",
+        "PWM fan",
+        "Ultrasonic mist",
+        "MOSFET drivers"
+      ],
+      "links": [
+        {
+          "label": "3D blueprint",
+          "url": "https://claude.ai/artifact/LbjKYa9anosxFDTY2Gwpdq"
+        },
+        {
+          "label": "Blueprint",
+          "url": "https://claude.ai/artifact/CCFJQk1m2PiukDQhAXSZtR"
+        },
+        {
+          "label": "EcoVital wiring",
+          "url": "https://claude.ai/artifact/BxX29xijj8wr7mkzeKVNBG"
+        },
+        {
+          "label": "Dust sensor close-up",
+          "url": "https://claude.ai/artifact/LFMcMZUAPUUAVW6y6FS3nz"
+        },
+        {
+          "label": "EcoVital pitch deck",
+          "url": "https://claude.ai/artifact/VGHHAW7v3FYv3muKk3x8wD"
+        }
+      ],
+      "image": "",
+      "images": [],
+      "catalog": "v5",
+      "featured": false
+    },
+    {
+      "id": "glucosestack",
+      "title": "Glucose Wearable Sensor Stack",
+      "category": "Healthtech",
+      "icon": "glucose",
+      "date": "2026",
+      "tagline": "A nine-part wrist module for glucose-trend and cardiovascular screening research.",
+      "description": "A research prototype for a wrist-worn module built around an ESP32-S3. Short-wave infrared, bioimpedance, PPG and ECG, spectral skin-tone, skin temperature, motion and ambient climate sensors each have one job, and the model learns from all of them together. The page is an interactive exploded drawing: tap any part to see what it measures, why it is on the board, a live signal trace, its bus address and where to source it. It also lays out the I2C address map, the features the model sees, and a three-phase build order that proves the signal before committing to a custom board. It is deliberately honest about scope: no non-invasive sensor has been validated to replace a glucometer, so every reading needs paired fingerprick or CGM ground truth.",
+      "highlights": [
+        "Nine sensors, each with one job: glucose signal, cardiovascular, correction, or compute and power",
+        "I2C address collision found and resolved (ADS1115 moved to 0x49)",
+        "Three build phases, each with a go or no-go gate",
+        "Ethics and NAFDAC medical-device rules called out up front"
+      ],
+      "tech": [
+        "ESP32-S3",
+        "SWIR / NIR",
+        "MAX86150",
+        "AD5941",
+        "AS7341",
+        "TMP117",
+        "BMI270"
+      ],
+      "links": [
+        {
+          "label": "Sensor stack explorer",
+          "url": "https://claude.ai/artifact/6zgbxvUfsTaaKs4BBFqjLT"
+        },
+        {
+          "label": "Wrist module walkthrough",
+          "url": "https://claude.ai/artifact/Lo3gwk8VCjEGoxRi4srTYs"
+        }
+      ],
+      "image": "img/glucose.jpg",
+      "images": [],
+      "catalog": "v5",
+      "featured": false
+    },
+    {
+      "id": "sunroot",
+      "title": "SunrootLearn",
+      "category": "EdTech",
+      "icon": "sunroot",
+      "date": "2026",
+      "tagline": "Turns a teacher's syllabus into a living class and measures real understanding, topic by topic.",
+      "description": "For students who pass exams on topics they never really understood. A teacher uploads a syllabus or notes, the AI drafts a topic map, lecture note, podcast, simulation and quiz, the teacher edits and approves, and students only see what was pushed. Every answer updates a mastery score and a heatmap shows the teacher who is stuck, on what, while there is still time to help. It works for any subject, and includes a Maker Studio for circuits, 3D, block coding and C++. It is a live web app on phone and laptop with more than 3,900 automated tests run on every change. The pitch is explicit about what is not proven yet: learning gains in a real class are what the pilot measures.",
+      "highlights": [
+        "Teacher stays in control: nothing reaches students until it is approved and pushed",
+        "Per-topic mastery heatmap instead of a single exam score",
+        "Maker Studio with circuits, 3D, block coding and C++",
+        "More than 3,900 automated tests run on every change"
+      ],
+      "tech": [
+        "Web app",
+        "Generative AI",
+        "Mastery tracking",
+        "Maker Studio",
+        "Pitch & launch campaign"
+      ],
+      "links": [
+        {
+          "label": "Pitch",
+          "url": "https://claude.ai/artifact/2gs6hUavxV8b2BaEffLaAU"
+        },
+        {
+          "label": "Pitch deck",
+          "url": "https://claude.ai/artifact/6HUxTbBwYRtGNNua7CSMMe"
+        },
+        {
+          "label": "STEM festival pitch",
+          "url": "https://claude.ai/artifact/4iGW8mi7dGWPnVLZeYGCA9"
+        },
+        {
+          "label": "Demo deck",
+          "url": "https://claude.ai/artifact/VXsbPngtNUyQdmGPrbZ2vS"
+        },
+        {
+          "label": "Launch campaign",
+          "url": "https://claude.ai/artifact/3zcXvc3wfkbPj5QEYAY6n9"
+        },
+        {
+          "label": "Social flyers",
+          "url": "https://claude.ai/artifact/57wv2iCaJeJrE6CYXGD7oq"
+        }
+      ],
+      "image": "",
+      "images": [],
+      "catalog": "v5",
+      "featured": false
+    },
+    {
+      "id": "oledsim",
+      "title": "OLED 128x64 Chunk Simulator",
+      "category": "Tools",
+      "icon": "oled",
+      "date": "2026",
+      "tagline": "Test your ESP32 text paging logic in the browser before wiring a display.",
+      "description": "A small tool for embedded developers. Type or paste the message an ESP32 will show and it is split into screen-sized pages exactly as an SSD1306 128 by 64 OLED would render it, at size 1 (21 columns by 8 rows) or size 2 (10 columns by 4 rows). It handles word wrap, hard line breaks and over-long words, with previous and next controls and a list of every page chunk to jump between.",
+      "highlights": [
+        "Matches the real 6x8 and 12x16 character grids",
+        "Word wrap, hard breaks and long-word splitting",
+        "Page indicator and tap-to-jump chunk list"
+      ],
+      "tech": [
+        "JavaScript",
+        "Canvas",
+        "SSD1306",
+        "Adafruit GFX"
+      ],
+      "links": [
+        {
+          "label": "Open the simulator",
+          "url": "https://claude.ai/artifact/J1nnz5NcNRaEcir7BHVQUM"
+        }
+      ],
+      "image": "img/oled.jpg",
+      "images": [],
+      "catalog": "v5",
+      "featured": false
+    },
+    {
+      "id": "ngmap",
+      "title": "Nigeria Problem-Solution Map",
+      "category": "Research",
+      "icon": "map",
+      "date": "2026",
+      "tagline": "45 startup ideas matched to real problems in Nigeria.",
+      "description": "A research map that pairs forty-five startup ideas with concrete problems people face in Nigeria, used to decide which problems are worth building for.",
+      "highlights": [
+        "45 ideas mapped to specific local problems"
+      ],
+      "tech": [
+        "Research",
+        "Problem framing"
+      ],
+      "links": [
+        {
+          "label": "Open the map",
+          "url": "https://claude.ai/artifact/RJU2LQTwPyt3c5q3j9NtxQ"
+        }
+      ],
+      "image": "",
+      "images": [],
+      "catalog": "v5",
+      "featured": false
+    },
+    {
       "id": "pet",
       "title": "PET Filament Recycling Machine",
       "category": "Sustainability",
@@ -26,7 +345,12 @@
         "Took 1st & 3rd place overall and qualified for the national finals in Abuja",
         "Converts waste PET into 3D-printing filament — sustainability meets engineering"
       ],
-      "tech": ["Mechanical Design", "Extrusion", "Thermal Control", "Sustainability"],
+      "tech": [
+        "Mechanical Design",
+        "Extrusion",
+        "Thermal Control",
+        "Sustainability"
+      ],
       "links": [],
       "image": "",
       "images": []
@@ -44,7 +368,11 @@
         "Balances across each step for stable walking",
         "Built and programmed end-to-end with Arduino"
       ],
-      "tech": ["Arduino", "Servos", "Gait Control"],
+      "tech": [
+        "Arduino",
+        "Servos",
+        "Gait Control"
+      ],
       "links": [],
       "image": "",
       "images": []
@@ -62,7 +390,11 @@
         "Insect-like locomotion across surfaces",
         "Hands-on multi-servo control"
       ],
-      "tech": ["Arduino", "Multi-Servo", "Locomotion"],
+      "tech": [
+        "Arduino",
+        "Multi-Servo",
+        "Locomotion"
+      ],
       "links": [],
       "image": "",
       "images": []
@@ -80,7 +412,11 @@
         "Self-steering with no manual control",
         "Sensor data handling and control logic in Python"
       ],
-      "tech": ["ESP", "Sensors", "Python"],
+      "tech": [
+        "ESP",
+        "Sensors",
+        "Python"
+      ],
       "links": [],
       "image": "",
       "images": []
@@ -98,7 +434,11 @@
         "Real-time autonomous steer-around",
         "Reliable sense-think-act loop"
       ],
-      "tech": ["Arduino", "Ultrasonic", "Auto-Steer"],
+      "tech": [
+        "Arduino",
+        "Ultrasonic",
+        "Auto-Steer"
+      ],
       "links": [],
       "image": "",
       "images": []
@@ -116,7 +456,11 @@
         "Built around connected ESP microcontrollers",
         "Practical IoT for the home"
       ],
-      "tech": ["ESP", "IoT", "Automation"],
+      "tech": [
+        "ESP",
+        "IoT",
+        "Automation"
+      ],
       "links": [],
       "image": "",
       "images": []
@@ -134,7 +478,11 @@
         "Compact wearable form factor",
         "Sensor integration with ESP"
       ],
-      "tech": ["Sensors", "ESP", "Health Tech"],
+      "tech": [
+        "Sensors",
+        "ESP",
+        "Health Tech"
+      ],
       "links": [],
       "image": "",
       "images": []
@@ -152,7 +500,11 @@
         "Connected, controllable lock",
         "Built on ESP"
       ],
-      "tech": ["ESP", "Access Control", "IoT"],
+      "tech": [
+        "ESP",
+        "Access Control",
+        "IoT"
+      ],
       "links": [],
       "image": "",
       "images": []
@@ -170,7 +522,11 @@
         "Hands-free, voice-driven results",
         "Applied AI with Python"
       ],
-      "tech": ["Python", "Speech AI", "Voice UI"],
+      "tech": [
+        "Python",
+        "Speech AI",
+        "Voice UI"
+      ],
       "links": [],
       "image": "",
       "images": []
